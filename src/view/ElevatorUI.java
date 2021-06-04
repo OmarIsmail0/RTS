@@ -82,12 +82,12 @@ public class ElevatorUI extends javax.swing.JFrame {
 
         Light.setText("Light ");
 
-        LightOff.setIcon(new javax.swing.ImageIcon("C:\\Users\\Laptop Shop\\Downloads\\1920x1080-red-solid-color-background.jpg")); // NOI18N
+        LightOff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/red.jpg"))); // NOI18N
         LightOff.setMaximumSize(new java.awt.Dimension(20, 20));
         LightOff.setMinimumSize(new java.awt.Dimension(20, 20));
         LightOff.setPreferredSize(new java.awt.Dimension(20, 20));
 
-        LightOn.setIcon(new javax.swing.ImageIcon("C:\\Users\\Laptop Shop\\Downloads\\green.png")); // NOI18N
+        LightOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/green.png"))); // NOI18N
         LightOn.setMaximumSize(new java.awt.Dimension(20, 20));
         LightOn.setMinimumSize(new java.awt.Dimension(20, 20));
         LightOn.setPreferredSize(new java.awt.Dimension(20, 20));
@@ -162,11 +162,11 @@ public class ElevatorUI extends javax.swing.JFrame {
 
         CallElevatorBtn3.setText("CALL");
 
-        Floor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Elevator.png"))); // NOI18N
+        Floor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Elevator.png"))); // NOI18N
 
-        Floor2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Elevator.png"))); // NOI18N
+        Floor2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Elevator.png"))); // NOI18N
 
-        Floor3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Elevator.png"))); // NOI18N
+        Floor3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Elevator.png"))); // NOI18N
 
         WeightLabel.setText("Weight");
 

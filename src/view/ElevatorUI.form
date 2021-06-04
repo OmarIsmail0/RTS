@@ -255,7 +255,7 @@
             <Component class="javax.swing.JLabel" name="LightOff">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\Laptop Shop\Downloads\1920x1080-red-solid-color-background.jpg"/>
+                  <Image iconType="3" name="/view/images/red.jpg"/>
                 </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[20, 20]"/>
@@ -271,7 +271,7 @@
             <Component class="javax.swing.JLabel" name="LightOn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\Laptop Shop\Downloads\green.png"/>
+                  <Image iconType="3" name="/view/images/green.png"/>
                 </Property>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[20, 20]"/>
@@ -307,21 +307,21 @@
         <Component class="javax.swing.JLabel" name="Floor1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/Elevator.png"/>
+              <Image iconType="3" name="/view/images/Elevator.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="Floor2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/Elevator.png"/>
+              <Image iconType="3" name="/view/images/Elevator.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="Floor3">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/Elevator.png"/>
+              <Image iconType="3" name="/view/images/Elevator.png"/>
             </Property>
           </Properties>
         </Component>
