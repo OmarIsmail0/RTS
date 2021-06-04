@@ -28,23 +28,12 @@ public class Main {
                         btnName += floorNum;
                         System.out.println(btnName);
 
-                        for (int i = 0; i < elevator.getGui().getjPanel1().getComponents().length; i++){
-                            if(elevator.getGui().getjPanel1().getComponent(i).equals(btnName)){
-                                System.out.println("print 0.5");
-                                callBtn = (JButton) elevator.getGui().getjPanel1().getComponent(i);
-                            }
-                        }
                         for (Component c : elevator.getGui().getjPanel1().getComponents()) {
                             System.out.println(c.getName());
                             if (c instanceof JButton) {
-                                System.out.println(c.getName());
                                 if (c.getName().compareToIgnoreCase(btnName) == 0) {
-                                    System.out.println("print 0.5");
                                     callBtn = (JButton) c;
-                                } else {
-                                    System.out.println(":(");
-                                    System.out.println(c.getName());
-                                }
+                                } 
                             }
                         }
                         if (elevator.getCurrentFloor() != floorNum) {

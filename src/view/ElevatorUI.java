@@ -20,6 +20,9 @@ public class ElevatorUI extends javax.swing.JFrame {
      */
     public ElevatorUI() {
         initComponents();
+        CallElevatorBtn1.setName("CallElevatorBtn1");
+        CallElevatorBtn2.setName("CallElevatorBtn2");
+        CallElevatorBtn3.setName("CallElevatorBtn3");
     }
 
     /**
@@ -86,13 +89,9 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(CallElevatorBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CallElevatorBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CallElevatorBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CallElevatorBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(13, 13, 13)
-                    .addComponent(CallElevatorBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(14, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,12 +100,9 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addComponent(CallElevatorBtn3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(CallElevatorBtn2)
-                .addGap(118, 118, 118))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(244, Short.MAX_VALUE)
-                    .addComponent(CallElevatorBtn1)
-                    .addContainerGap()))
+                .addGap(84, 84, 84)
+                .addComponent(CallElevatorBtn1)
+                .addContainerGap())
         );
 
         Floor1.setIcon(new javax.swing.ImageIcon("M:\\ics\\rts\\RTS-Project\\RTS\\src\\view\\images\\Elevator.png")); // NOI18N
