@@ -5,6 +5,14 @@
  */
 package view;
 
+import esper.Config;
+import events.DoorEvent;
+import events.EmergencyStopEvent;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import model.DoorController;
+
 /**
  *
  * @author Laptop Shop
@@ -40,6 +48,8 @@ public class ElevatorUI extends javax.swing.JFrame {
         Light = new javax.swing.JLabel();
         LightOff = new javax.swing.JLabel();
         LightOn = new javax.swing.JLabel();
+        LightPanel = new javax.swing.JPanel();
+        CloseDoorBtn = new javax.swing.JButton();
         CallElevatorBtn1 = new javax.swing.JButton();
         CallElevatorBtn2 = new javax.swing.JButton();
         CallElevatorBtn3 = new javax.swing.JButton();
@@ -48,6 +58,9 @@ public class ElevatorUI extends javax.swing.JFrame {
         Floor3 = new javax.swing.JLabel();
         WeightInput = new javax.swing.JTextField();
         WeightLabel = new javax.swing.JLabel();
+        Floor3Label = new javax.swing.JLabel();
+        Floor2Label = new javax.swing.JLabel();
+        Floor1Label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 102));
@@ -68,8 +81,18 @@ public class ElevatorUI extends javax.swing.JFrame {
         Floor3btn.setText("Floor 3");
 
         StopBtn.setText("Emergency STOP");
+        StopBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StopBtnActionPerformed(evt);
+            }
+        });
 
         DoorBtn.setText("Open Door");
+        DoorBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DoorBtnActionPerformed(evt);
+            }
+        });
 
         DoorStatus.setText("Door Status");
 
@@ -82,47 +105,67 @@ public class ElevatorUI extends javax.swing.JFrame {
 
         Light.setText("Light ");
 
-        LightOff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/red.jpg"))); // NOI18N
         LightOff.setMaximumSize(new java.awt.Dimension(20, 20));
         LightOff.setMinimumSize(new java.awt.Dimension(20, 20));
         LightOff.setPreferredSize(new java.awt.Dimension(20, 20));
 
-        LightOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/green.png"))); // NOI18N
         LightOn.setMaximumSize(new java.awt.Dimension(20, 20));
         LightOn.setMinimumSize(new java.awt.Dimension(20, 20));
         LightOn.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        LightPanel.setBackground(new java.awt.Color(255, 0, 51));
+
+        javax.swing.GroupLayout LightPanelLayout = new javax.swing.GroupLayout(LightPanel);
+        LightPanel.setLayout(LightPanelLayout);
+        LightPanelLayout.setHorizontalGroup(
+            LightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 52, Short.MAX_VALUE)
+        );
+        LightPanelLayout.setVerticalGroup(
+            LightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 24, Short.MAX_VALUE)
+        );
+
+        CloseDoorBtn.setText("Close Door");
+        CloseDoorBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CloseDoorBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ElevatorControllerPanelLayout = new javax.swing.GroupLayout(ElevatorControllerPanel);
         ElevatorControllerPanel.setLayout(ElevatorControllerPanelLayout);
         ElevatorControllerPanelLayout.setHorizontalGroup(
             ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ElevatorControllerPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                        .addComponent(DoorStatus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(doorStatusField, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                        .addComponent(Light, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LightOn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LightOff, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(DoorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StopBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DoorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CloseDoorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(ElevatorPanel)
                     .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(Floor3btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(Floor2btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Floor1btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ElevatorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(31, 31, 31))
-            .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
-                .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
-                                .addComponent(DoorStatus)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(doorStatusField, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Light, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LightOn, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LightOff, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(Floor1btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         ElevatorControllerPanelLayout.setVerticalGroup(
             ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,17 +181,25 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addComponent(StopBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DoorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DoorStatus)
-                    .addComponent(doorStatusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(Light)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LightOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LightOn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addComponent(CloseDoorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                        .addComponent(LightOff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(LightOn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                        .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DoorStatus)
+                            .addComponent(doorStatusField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(ElevatorControllerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(ElevatorControllerPanelLayout.createSequentialGroup()
+                                .addComponent(Light)
+                                .addGap(10, 10, 10))
+                            .addComponent(LightPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         CallElevatorBtn1.setText("CALL");
@@ -162,78 +213,93 @@ public class ElevatorUI extends javax.swing.JFrame {
 
         CallElevatorBtn3.setText("CALL");
 
-        Floor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Elevator.png"))); // NOI18N
-
-        Floor2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Elevator.png"))); // NOI18N
-
-        Floor3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Elevator.png"))); // NOI18N
-
         WeightLabel.setText("Weight");
+
+        Floor3Label.setText("Floor 3");
+
+        Floor2Label.setText("Floor 2");
+
+        Floor1Label.setText("Floor 1");
 
         javax.swing.GroupLayout ElevPanelLayout = new javax.swing.GroupLayout(ElevPanel);
         ElevPanel.setLayout(ElevPanelLayout);
         ElevPanelLayout.setHorizontalGroup(
             ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ElevPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(ElevatorControllerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ElevPanelLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(WeightLabel))
+                        .addGap(468, 468, 468)
+                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(ElevPanelLayout.createSequentialGroup()
+                                .addComponent(CallElevatorBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Floor1Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(ElevPanelLayout.createSequentialGroup()
+                                .addComponent(CallElevatorBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Floor2Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(ElevPanelLayout.createSequentialGroup()
+                                .addComponent(CallElevatorBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Floor3Label, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(ElevPanelLayout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(WeightInput)
-                            .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Floor3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Floor2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Floor1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(65, 65, 65)
+                        .addGap(19, 19, 19)
+                        .addComponent(ElevatorControllerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CallElevatorBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CallElevatorBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CallElevatorBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                            .addGroup(ElevPanelLayout.createSequentialGroup()
+                                .addGap(130, 130, 130)
+                                .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Floor3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Floor2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Floor1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(WeightLabel)))
+                            .addGroup(ElevPanelLayout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(WeightInput, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(48, 48, Short.MAX_VALUE))
         );
         ElevPanelLayout.setVerticalGroup(
             ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ElevPanelLayout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(ElevPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ElevPanelLayout.createSequentialGroup()
+                        .addComponent(ElevatorControllerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(ElevPanelLayout.createSequentialGroup()
                         .addComponent(WeightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(WeightInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CallElevatorBtn3)
+                            .addComponent(Floor3Label))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ElevPanelLayout.createSequentialGroup()
-                                .addComponent(Floor3)
-                                .addGap(52, 52, 52))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ElevPanelLayout.createSequentialGroup()
-                                .addComponent(CallElevatorBtn3)
-                                .addGap(74, 74, 74)))
-                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(Floor3)
+                        .addGap(39, 39, 39)
+                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CallElevatorBtn2)
+                            .addComponent(Floor2Label))
+                        .addGap(25, 25, 25)
+                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(ElevPanelLayout.createSequentialGroup()
                                 .addComponent(Floor2)
                                 .addGap(48, 48, 48)
                                 .addComponent(Floor1))
-                            .addGroup(ElevPanelLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(CallElevatorBtn2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(CallElevatorBtn1)
-                                .addContainerGap())))
-                    .addComponent(ElevatorControllerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(Floor1Label)))
+                        .addContainerGap(155, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 22, Short.MAX_VALUE)
-                .addComponent(ElevPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ElevPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,17 +311,31 @@ public class ElevatorUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Floor2btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor2btnActionPerformed
+    private void CallElevatorBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Floor2btnActionPerformed
+    }//GEN-LAST:event_CallElevatorBtn1ActionPerformed
 
     private void doorStatusFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorStatusFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_doorStatusFieldActionPerformed
 
-    private void CallElevatorBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn1ActionPerformed
+    private void DoorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoorBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CallElevatorBtn1ActionPerformed
+        Config.sendEvent(new DoorEvent(true));
+    }//GEN-LAST:event_DoorBtnActionPerformed
+
+    private void StopBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopBtnActionPerformed
+        Config.sendEvent(new EmergencyStopEvent(true));
+    }//GEN-LAST:event_StopBtnActionPerformed
+
+    private void Floor2btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor2btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Floor2btnActionPerformed
+
+    private void CloseDoorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseDoorBtnActionPerformed
+        // TODO add your handling code here:
+        Config.sendEvent(new DoorEvent(false));
+    }//GEN-LAST:event_CloseDoorBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,23 +377,49 @@ public class ElevatorUI extends javax.swing.JFrame {
     private javax.swing.JButton CallElevatorBtn1;
     private javax.swing.JButton CallElevatorBtn2;
     private javax.swing.JButton CallElevatorBtn3;
+    private javax.swing.JButton CloseDoorBtn;
     private javax.swing.JButton DoorBtn;
     private javax.swing.JLabel DoorStatus;
     private javax.swing.JPanel ElevPanel;
     private javax.swing.JPanel ElevatorControllerPanel;
     private javax.swing.JLabel ElevatorPanel;
     private javax.swing.JLabel Floor1;
+    private javax.swing.JLabel Floor1Label;
     private javax.swing.JButton Floor1btn;
     private javax.swing.JLabel Floor2;
+    private javax.swing.JLabel Floor2Label;
     private javax.swing.JButton Floor2btn;
     private javax.swing.JLabel Floor3;
+    private javax.swing.JLabel Floor3Label;
     private javax.swing.JButton Floor3btn;
     private javax.swing.JLabel Light;
     private javax.swing.JLabel LightOff;
     private javax.swing.JLabel LightOn;
+    private javax.swing.JPanel LightPanel;
     private javax.swing.JButton StopBtn;
     private javax.swing.JTextField WeightInput;
     private javax.swing.JLabel WeightLabel;
     private javax.swing.JTextField doorStatusField;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getEmergencyStopBtn() {
+        return StopBtn;
+    }
+
+    public JPanel getElevatorPanel() {
+        return ElevatorControllerPanel; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public JPanel getElevPanel() {
+        return ElevPanel; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public JTextField getDoorStatus(){
+        return doorStatusField; 
+    }
+    
+    public JPanel getLightPanel(){
+        return LightPanel; 
+    }
+
 }
