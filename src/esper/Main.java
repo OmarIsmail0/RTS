@@ -3,10 +3,7 @@ package esper;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author ADMIN
- */
+
 public class Main {
     public static void main(String[] args) {
 
