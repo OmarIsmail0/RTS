@@ -5,6 +5,13 @@
  */
 package view;
 
+import esper.Config;
+import event.ChooseFloorEvent;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Laptop Shop
@@ -66,6 +73,11 @@ public class ElevatorUI extends javax.swing.JFrame {
         });
 
         Floor3btn.setText("Floor 3");
+        Floor3btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Floor3btnActionPerformed(evt);
+            }
+        });
 
         StopBtn.setText("Emergency STOP");
 
@@ -159,6 +171,11 @@ public class ElevatorUI extends javax.swing.JFrame {
         });
 
         CallElevatorBtn2.setText("CALL");
+        CallElevatorBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CallElevatorBtn2ActionPerformed(evt);
+            }
+        });
 
         CallElevatorBtn3.setText("CALL");
 
@@ -257,6 +274,100 @@ public class ElevatorUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CallElevatorBtn1ActionPerformed
 
+    private void CallElevatorBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CallElevatorBtn2ActionPerformed
+
+    private void Floor3btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor3btnActionPerformed
+        Config.sendEvent(new ChooseFloorEvent(3));
+    }//GEN-LAST:event_Floor3btnActionPerformed
+
+    public JLabel getElevatorPanel() {
+        return ElevatorPanel;
+    }
+
+    public JPanel getElevPanel() {
+        return ElevPanel;
+    }
+
+    public JButton getCallElevatorBtn1() {
+        return CallElevatorBtn1;
+    }
+
+    public JButton getCallElevatorBtn2() {
+        return CallElevatorBtn2;
+    }
+
+    public JButton getCallElevatorBtn3() {
+        return CallElevatorBtn3;
+    }
+
+    public JButton getDoorBtn() {
+        return DoorBtn;
+    }
+
+    public JLabel getDoorStatus() {
+        return DoorStatus;
+    }
+
+    public JPanel getElevatorControllerPanel() {
+        return ElevatorControllerPanel;
+    }
+
+    public JLabel getFloor1() {
+        return Floor1;
+    }
+
+    public JButton getFloor1btn() {
+        return Floor1btn;
+    }
+
+    public JLabel getFloor2() {
+        return Floor2;
+    }
+
+    public JButton getFloor2btn() {
+        return Floor2btn;
+    }
+
+    public JLabel getFloor3() {
+        return Floor3;
+    }
+
+    public JButton getFloor3btn() {
+        return Floor3btn;
+    }
+
+    public JLabel getLight() {
+        return Light;
+    }
+
+    public JLabel getLightOff() {
+        return LightOff;
+    }
+
+    public JLabel getLightOn() {
+        return LightOn;
+    }
+
+    public JButton getStopBtn() {
+        return StopBtn;
+    }
+
+    public JTextField getWeightInput() {
+        return WeightInput;
+    }
+
+    public JLabel getWeightLabel() {
+        return WeightLabel;
+    }
+
+    public JTextField getDoorStatusField() {
+        return doorStatusField;
+    }
+
+    
+    
     /**
      * @param args the command line arguments
      */

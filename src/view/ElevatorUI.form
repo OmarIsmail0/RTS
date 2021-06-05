@@ -223,6 +223,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Floor 3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Floor3btnActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="StopBtn">
               <Properties>
@@ -298,6 +301,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="CALL"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CallElevatorBtn2ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="CallElevatorBtn3">
           <Properties>

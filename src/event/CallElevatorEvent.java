@@ -1,12 +1,14 @@
 package event;
 
-import model.MoveDirection;
+
 
 public class CallElevatorEvent {
+    public enum MoveDirectionEnum { UPWARDS, DOWNWARDS, NONE };
+    
     private final int requestedFloor;
-    private final MoveDirection direction;
+    private final MoveDirectionEnum direction;
 
-    public CallElevatorEvent(int requestedFloor, MoveDirection direction) {
+    public CallElevatorEvent(int requestedFloor, MoveDirectionEnum direction) {
         this.requestedFloor = requestedFloor;
         this.direction = direction;
     }
@@ -15,7 +17,7 @@ public class CallElevatorEvent {
         return requestedFloor;
     }
 
-    public MoveDirection getDirection() {
+    public MoveDirectionEnum getDirection() {
         return direction;
     }
     
