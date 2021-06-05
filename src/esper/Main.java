@@ -1,15 +1,14 @@
 package esper;
 
-import event.CallElevatorEvent.MoveDirectionEnum;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import model.Elevator;
-import model.ElevatorTranslateThread;
+import model.ElevatorController;
 import model.Request;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-
-import javax.swing.*;
-import java.awt.*;
 
 
 public class Main {
@@ -19,11 +18,33 @@ public class Main {
         Logger.getRootLogger().setLevel(Level.OFF);
         // Register events
         Config.registerEvents();
-        //System.out.println(NativeDebug.getClass(args, args));
-        // Create Elevator
+        
+        //final EmergencyStopController elevator = new EmergencyStopController();
         final Elevator elevator = new Elevator();
-        ElevatorTranslateThread elv = new ElevatorTranslateThread(elevator,new Request(1, new JButton() ) );
-        System.out.println(elevator.getGui().getCarPnel().getLocation().y);
+        //System.out.println(elevator.getGui().getCarPnel().getLocation().y);
+        Config.createStatement("select trigger_emergency from EmergencyStopEvent")
+                .setSubscriber(new Object() {
+                    public void update(boolean status) throws InterruptedException {
+                        
+                        elevator.setEmergencyTrigger(status);
+                        if (status){
+                            elevator.RunEmergency();
+                        }
+                    }
+                });
+        
+        Config.createStatement("select doorstate from DoorEvent")
+                
+                .setSubscriber(new Object() {
+                    public void update(boolean isOpen) throws InterruptedException {
+                        elevator.getDoorCtrl().changeDoorStatus(isOpen);
+                       // elev.getDoorController().setIsOpen(isopen);
+                        if (isOpen == true)
+                            elevator.OpenDoor();
+                        else
+                            elevator.CloseDoor();
+                    }
+                });
 
         Config.createStatement("select destinationFloor, type from ChooseFloorEvent")
                 .setSubscriber(new Object() {
@@ -59,11 +80,9 @@ public class Main {
                         }
                     }
                 });
-
-        Config.createStatement("select direction, isMoving, carPositionY, currentFloor from ElevatorStateReading")
+        Config.createStatement("select isMoving, carPositionY, currentFloor from ElevatorStateReading")
                 .setSubscriber(new Object() {
-                    public void update(MoveDirectionEnum direction, boolean isMoving, int carPositionY, int currentFloor) throws InterruptedException {
-                        elevator.setDirection(direction);
+                    public void update( boolean isMoving, int carPositionY, int currentFloor) throws InterruptedException {
                         elevator.setMoving(isMoving);
                         elevator.setElevatorPositionY(carPositionY);
                         elevator.setCurrentFloor(currentFloor);
@@ -73,6 +92,6 @@ public class Main {
 
                     }
                 });
-
+        
     }
 }

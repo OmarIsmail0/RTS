@@ -1,28 +1,90 @@
 package model;
 
+import java.awt.Component;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import view.ElevatorUI;
+
+import esper.Config;
+
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
+
+/**
+ *
+ * @author Laptop Shop
+ */
 public class ElevatorController {
+    // The Elevator GUI
+    private final ElevatorUI gui;
+    //private final DoorController doorc;
+    private final SoundController sound;
+    
     private final Elevator elevator;
     private final Timer requestManager;
     private final ArrayList<Request> Requests;
-    private final SoundController audioController;
+    // Elevator Components
     
+    // Elevators StatusW
+    private boolean emergencyTrigger;
+    //private boolean isOpen;
     
+ 
     public ElevatorController(Elevator elevator) {
-        
         this.elevator = elevator;
         this.requestManager = new Timer();
+        this.gui = new ElevatorUI();
         this.Requests = new ArrayList<>();
+        //this.doorc = new DoorController(true,this); // asdasdassadQAWE
         this.requestManager.schedule(new RequestManager(elevator, this), 0, 1000);
-        this.audioController = new SoundController();
+        this.sound = new SoundController();
+        // Initialize Elevator Status
     }
+    
+    
+    
+/*    public void OpenDoor(){
+        this.doorc.changeDoorStatus(true);
+    }
+    
+    public void CloseDoor(){
+        this.doorc.changeDoorStatus(false);
+    }
+    
+    
+    
+    public DoorController getDoorController(){
+        return doorc;
+    }*/
+
+    public SoundController getSound() {
+        return sound;
+    }
+    
+    public ElevatorUI getGUI() {
+        return gui;
+    }
+
+
+    public boolean isEmergencyTrigger() {
+        return emergencyTrigger;
+    }
+    
+    
+  public void setEmergencyTrigger(boolean emergencyTrigger) {
+        this.emergencyTrigger = emergencyTrigger;
+    }
+    
     
     public void ChangeDoorState(boolean doorState){
         if (elevator.getIsMoving() == false){
-            this.elevator.getDoorCtrl().setElevator(doorState);
+            this.elevator.getDoorCtrl().changeDoorStatus(doorState);
         }
     }
     
@@ -56,15 +118,13 @@ public class ElevatorController {
             elevator.getGui().getDoorBtn().setEnabled(false);
             //elevator.getGui().getBtnCloseDoor().setEnabled(false);
             
-            if (!elevator.getIsMoving())
-                this.audioController.playWaitingMusic();
-            
+         if (!elevator.getIsMoving())
+              sound.playWaitingMusic();
+         
             Timer t = new Timer();
             t.schedule(new ElevatorTranslateThread(elevator, r), 500, 7);
         }
     }
-
-    public SoundController getAudioController() {
-        return audioController;
-    }
+    
 }
+

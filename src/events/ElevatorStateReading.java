@@ -1,16 +1,13 @@
-package event;
-
-import event.CallElevatorEvent.MoveDirectionEnum;
+package events;
 
 public class ElevatorStateReading {
     private final boolean isMoving;
-    private final MoveDirectionEnum direction;
     private final int currentFloor;
     private final int carPositionY;
 
-    public ElevatorStateReading(MoveDirectionEnum direction, boolean isMoving, int carPositionY, int currentFloor) {
+    public ElevatorStateReading( boolean isMoving, int carPositionY, int currentFloor) {
         this.isMoving = isMoving;
-        this.direction = direction;
+        
         this.currentFloor = currentFloor;
         this.carPositionY = carPositionY;
     }
@@ -19,9 +16,6 @@ public class ElevatorStateReading {
         return isMoving;
     }
 
-    public MoveDirectionEnum getDirection() {
-        return direction;
-    }
 
     public int getCurrentFloor() {
         return currentFloor;
@@ -34,4 +28,5 @@ public class ElevatorStateReading {
     public int getCarPositionY() {
         return carPositionY;
     }
+    
 }
