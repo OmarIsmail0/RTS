@@ -2,11 +2,11 @@ package model;
 
 import java.util.TimerTask;
 
-public class RequestManager extends TimerTask{
+public class PanelControl extends TimerTask{
     private final ElevatorCar elevator;
     private final ElevatorControlCabinet controller;
 
-    public RequestManager(ElevatorCar elevator, ElevatorControlCabinet controller) {
+    public PanelControl(ElevatorCar elevator, ElevatorControlCabinet controller) {
         this.elevator = elevator;
         this.controller = controller;
     }
@@ -25,7 +25,7 @@ public class RequestManager extends TimerTask{
         if (elevator.getIsMoving())
             return;
         
-        Request r = controller.getNextRequest();
+        ElevatorRequest r = controller.getNextRequest();
         controller.MoveElevator(r);
     }
 }

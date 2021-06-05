@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import model.ElevatorCar;
-import model.Request;
+import model.ElevatorRequest;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 

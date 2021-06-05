@@ -12,7 +12,7 @@ public class ElevatorControlCabinet {
     private final SoundController sound;
     private final ElevatorCar elevator;
     private final Timer requestManager;
-    private final ArrayList<Request> Requests;
+    private final ArrayList<ElevatorRequest> Requests;
     private boolean emergencyTrigger;
 
     public ElevatorControlCabinet(ElevatorCar elevator) {
@@ -20,7 +20,7 @@ public class ElevatorControlCabinet {
         requestManager = new Timer();
         gui = new ElevatorUI();
         Requests = new ArrayList<>();
-        requestManager.schedule(new RequestManager(elevator, this), 0, 1000);
+        requestManager.schedule(new PanelControl(elevator, this), 0, 1000);
         sound = new SoundController();
     }
 
@@ -50,9 +50,9 @@ public class ElevatorControlCabinet {
 //        }
 //    }
 
-    public void AcceptRequest(Request request) {
+    public void AcceptRequest(ElevatorRequest request) {
         boolean flagExist = false;
-        for (Request r : Requests) {
+        for (ElevatorRequest r : Requests) {
             if (r.getRequestedFloor() == request.getRequestedFloor()
                     || r.getRequestID() == request.getRequestID()
                     || request.getRequestedFloor() == elevator.getCurrentFloor()) {
@@ -65,11 +65,11 @@ public class ElevatorControlCabinet {
 
     }
 
-    public ArrayList<Request> getRequests() {
+    public ArrayList<ElevatorRequest> getRequests() {
         return Requests;
     }
 
-    public Request getNextRequest() {
+    public ElevatorRequest getNextRequest() {
         Collections.sort(Requests, (a, b) -> Math.abs(elevator.getCurrentFloor() - a.getRequestedFloor()) < Math.abs(elevator.getCurrentFloor() - b.getRequestedFloor()) ? -1 : 1);
         if (Requests.isEmpty()) {
             return null;
@@ -78,7 +78,7 @@ public class ElevatorControlCabinet {
         }
     }
 
-    public void MoveElevator(Request r) {
+    public void MoveElevator(ElevatorRequest r) {
         if (r.getRequestedFloor() != elevator.getCurrentFloor()) {
             elevator.getGui().getDoorBtn().setEnabled(false);
             elevator.getGui().getCloseDoorBtn().setEnabled(false);

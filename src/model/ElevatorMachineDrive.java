@@ -16,9 +16,9 @@ public class ElevatorMachineDrive extends TimerTask {
     int[] FloorY = {450, 340, 240};
 
     private final ElevatorCar elevator;
-    private final Request request;
+    private final ElevatorRequest request;
 
-    public ElevatorMachineDrive(ElevatorCar elevator, Request request) {
+    public ElevatorMachineDrive(ElevatorCar elevator, ElevatorRequest request) {
 
         this.elevator = elevator;
         this.request = request;

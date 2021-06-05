@@ -1,14 +1,14 @@
 package model;
 import javax.swing.JButton;
 
-public class Request {
+public class ElevatorRequest {
   
     private static int count = 1;
     private final int requestID;
     private final int requestedFloor;
     private final JButton clickedBtn;
 
-    public Request(int requestedFloor, JButton clickedBtn) {
+    public ElevatorRequest(int requestedFloor, JButton clickedBtn) {
         this.requestID = count;
         this.requestedFloor = requestedFloor;
         this.clickedBtn = clickedBtn;

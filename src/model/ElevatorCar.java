@@ -28,7 +28,7 @@ public class ElevatorCar {
     }
 
     public void CreateRequest(int destFloor, JButton btn) {
-        Request request = new Request(destFloor, btn);
+        ElevatorRequest request = new ElevatorRequest(destFloor, btn);
         this.ctrl.AcceptRequest(request);
     }
 
