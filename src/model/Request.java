@@ -1,21 +1,22 @@
 package model;
-
 import event.CallElevatorEvent.MoveDirectionEnum;
 import javax.swing.JButton;
 
 public class Request {
-    private static int count = 0;
+  
+    private static int ID_COUNTER = 1;
     private final MoveDirectionEnum direction;
     private final int requestID;
     private final int requestedFloor;
     private final JButton clickedBtn;
 
     public Request(int requestedFloor, MoveDirectionEnum direction, JButton clickedBtn) {
-        count++;
-        this.requestID = count;
+        this.requestID = ID_COUNTER;
         this.requestedFloor = requestedFloor;
-        this.clickedBtn = clickedBtn;
         this.direction = direction;
+        this.clickedBtn = clickedBtn;
+
+        ID_COUNTER++;
     }
 
     public int getRequestID() {
