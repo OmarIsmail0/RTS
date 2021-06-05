@@ -56,24 +56,36 @@ public class ElevatorTranslateThread extends TimerTask {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1);
                 Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
                 elevator.getGui().getDoorStatus().setText("Closed");
+                elevator.getGui().getWeightInput().setEnabled(false);
+                elevator.getGui().getEmergencyStopBtn().setEnabled(true);
+                elevator.getGui().getDoorBtn().setEnabled(false);
                 elevator.getGui().getLightPanel().setBackground(Color.GREEN);
             } else {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y + 1);
                 Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
                 elevator.getGui().getDoorStatus().setText("Closed");
+                elevator.getGui().getWeightInput().setEnabled(false);
+                elevator.getGui().getEmergencyStopBtn().setEnabled(true);
+                elevator.getGui().getDoorBtn().setEnabled(false);
                 elevator.getGui().getLightPanel().setBackground(Color.GREEN);
             }
         } else {
             Config.sendEvent(new ElevatorStateReading(false, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
             Config.sendEvent(new DoorEvent(true));
-            request.getClickedBtn().setBackground(Color.WHITE);
+            request.getClickedBtn().setBackground(Color.CYAN);
             elevator.getGui().getDoorStatus().setText("Open");
+            elevator.getGui().getWeightInput().setEnabled(true);
+            elevator.getGui().getEmergencyStopBtn().setEnabled(false);
+            elevator.getGui().getDoorBtn().setEnabled(false);
             for (Component c : elevator.getGui().getCallPanl().getComponents()) {
                 if (c instanceof JButton) {
                     if (c.getName().compareToIgnoreCase(request.getClickedBtn().getName()) == 0) {
-                        c.setBackground(Color.WHITE);
+                        c.setBackground(Color.CYAN);
                         elevator.getGui().getDoorStatus().setText("Open");
                         elevator.getGui().getLightPanel().setBackground(Color.GREEN);
+                        elevator.getGui().getWeightInput().setEnabled(true);
+                        elevator.getGui().getEmergencyStopBtn().setEnabled(false);
+                        elevator.getGui().getDoorBtn().setEnabled(false);
                     }
                 }
             }
@@ -81,7 +93,7 @@ public class ElevatorTranslateThread extends TimerTask {
                 if (c instanceof JButton) {
                     try {
                         if (((JButton) c).getName().compareToIgnoreCase("Floor" + request.getRequestedFloor() + "btn") == 0) {
-                            c.setBackground(Color.WHITE);
+                            c.setBackground(Color.CYAN);
                             break;
                         }
                     } catch (Exception e) {

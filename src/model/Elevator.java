@@ -10,6 +10,7 @@ public class Elevator {
     private final ElevatorUI gui;
     private final DoorController doorCtrl;
     private final ElevatorController ctrl;
+    private final WeightController weightCtrl;
     private int currentFloor;
     private boolean isMoving;
     private boolean emergencyTrigger;
@@ -18,7 +19,9 @@ public class Elevator {
 
     public Elevator() {
         this.gui = new ElevatorUI();
+        this.gui.getEmergencyStopBtn().setEnabled(false);
         this.ctrl = new ElevatorController(this);
+        this.weightCtrl = new WeightController(this);
         this.doorCtrl = new DoorController(true, ctrl);
         this.currentFloor = 1;
         gui.setVisible(true);
@@ -38,23 +41,17 @@ public class Elevator {
             if (c instanceof JButton) {
                 c.setEnabled(false);
                 c.setBackground(java.awt.Color.RED);
-                //System.out.print("Emergency disabled");
             }
         }
         for (Component c : this.getGui().getCallPanl().getComponents()) {
             if (c instanceof JButton) {
                 c.setEnabled(false);
                 c.setBackground(java.awt.Color.RED);
-                //System.out.print("Emergency disabled");
             }
-
         }
         gui.getLightPanel().setBackground(Color.RED);
         gui.getDoorStatus().setText("Closed");
-        //  getSound().playEmergencySound();
         ctrl.getSound().playEmergencySound();
-        System.out.print("OHCOMMON!!");
-
 
     }
 
@@ -116,5 +113,9 @@ public class Elevator {
         this.emergencyTrigger = emergencyTrigger;
     }
 
+    public WeightController getWeightCtrl() {
+        return weightCtrl;
+    }
 
+    
 }

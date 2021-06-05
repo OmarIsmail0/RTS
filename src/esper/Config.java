@@ -13,7 +13,7 @@ public class Config {
         //engine.getEPAdministrator().getConfiguration().addEventType(CarCallEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(EmergencyStopEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(DoorEvent.class);
-      
+        engine.getEPAdministrator().getConfiguration().addEventType(WeightSensorReading.class);
         engine.getEPAdministrator().getConfiguration().addEventType(ChooseFloorEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(ElevatorStateReading.class);
         

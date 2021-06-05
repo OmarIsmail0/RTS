@@ -31,7 +31,7 @@ public class DoorController {
         if (doorStatus == true){
             elevator.getGUI().getLightPanel().setBackground(Color.GREEN);
             elevator.getGUI().getDoorStatus().setText("Open");
-
+            elevator.getGUI().getDoorBtn().setEnabled(false);
 
             elevator.getSound().playOpenDoorSound();
             try {
@@ -45,6 +45,7 @@ public class DoorController {
         else {
             elevator.getGUI().getLightPanel().setBackground(Color.RED);
             elevator.getGUI().getDoorStatus().setText("Closed");
+            elevator.getGUI().getDoorBtn().setEnabled(true);
         }
         
         

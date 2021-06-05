@@ -41,28 +41,10 @@ public class ElevatorController {
         this.requestManager = new Timer();
         this.gui = new ElevatorUI();
         this.Requests = new ArrayList<>();
-        //this.doorc = new DoorController(true,this); // asdasdassadQAWE
         this.requestManager.schedule(new RequestManager(elevator, this), 0, 1000);
         this.sound = new SoundController();
-        // Initialize Elevator Status
     }
     
-    
-    
-/*    public void OpenDoor(){
-        this.doorc.changeDoorStatus(true);
-    }
-    
-    public void CloseDoor(){
-        this.doorc.changeDoorStatus(false);
-    }
-    
-    
-    
-    public DoorController getDoorController(){
-        return doorc;
-    }*/
-
     public SoundController getSound() {
         return sound;
     }
