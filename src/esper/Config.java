@@ -5,26 +5,26 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import events.DoorEvent;
 import events.EmergencyStopEvent;
+import events.CallCarEvent;
 
 public class Config {
     private static EPServiceProvider engine = EPServiceProviderManager.getDefaultProvider();
-    
+
     public static void registerEvents() {
         //engine.getEPAdministrator().getConfiguration().addEventType(CarCallEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(EmergencyStopEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(DoorEvent.class);
-       
-        
+        engine.getEPAdministrator().getConfiguration().addEventType(CallCarEvent.class);
         System.out.println("Events Successfully Registered.");
     }
-    
+
     public static EPStatement createStatement(String s) {
         //System.out.print("emergecny statement sent");
         EPStatement result = engine.getEPAdministrator().createEPL(s);
         System.out.println("EPL Statement Successfully Created.");
         return result;
     }
-    
+
     public static void sendEvent(Object o) {
         engine.getEPRuntime().sendEvent(o);
     }
