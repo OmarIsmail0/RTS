@@ -229,21 +229,17 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        CarIcon.setIcon(new javax.swing.ImageIcon("D:\\Documents\\GitHub\\RTS\\src\\view\\images\\Elevator.png")); // NOI18N
+        CarIcon.setIcon(new javax.swing.ImageIcon("M:\\ics\\rts\\RTS-Project\\RTS\\src\\view\\images\\Elevator.png")); // NOI18N
 
         javax.swing.GroupLayout CarPnelLayout = new javax.swing.GroupLayout(CarPnel);
         CarPnel.setLayout(CarPnelLayout);
         CarPnelLayout.setHorizontalGroup(
             CarPnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CarPnelLayout.createSequentialGroup()
-                .addComponent(CarIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(CarIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         CarPnelLayout.setVerticalGroup(
             CarPnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CarPnelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(CarIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(CarIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 60, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout ElevPanelLayout = new javax.swing.GroupLayout(ElevPanel);
@@ -256,9 +252,9 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ElevPanelLayout.createSequentialGroup()
                         .addGap(84, 84, 84)
-                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(WeightInput, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CarPnel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(ElevPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(WeightInput, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                            .addComponent(CarPnel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(72, 72, 72)
                         .addComponent(CallPanl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(ElevPanelLayout.createSequentialGroup()
@@ -302,7 +298,7 @@ public class ElevatorUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Floor2btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor2btnActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(2));
+        Config.sendEvent(new ChooseFloorEvent(2,"Floor"));
     }//GEN-LAST:event_Floor2btnActionPerformed
 
     private void doorStatusFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorStatusFieldActionPerformed
@@ -310,24 +306,24 @@ public class ElevatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_doorStatusFieldActionPerformed
 
     private void CallElevatorBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn1ActionPerformed
-        Config.sendEvent(new CallElevatorEvent(1, MoveDirectionEnum.UPWARDS));
+        Config.sendEvent(new ChooseFloorEvent(1,"CallElevatorBtn"));
     }//GEN-LAST:event_CallElevatorBtn1ActionPerformed
 
 
     private void Floor3btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor3btnActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(3));
+       Config.sendEvent(new ChooseFloorEvent(3,"Floor"));
     }//GEN-LAST:event_Floor3btnActionPerformed
 
     private void CallElevatorBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn3ActionPerformed
-        Config.sendEvent(new CallElevatorEvent(3, MoveDirectionEnum.DOWNWARDS));
+        Config.sendEvent(new ChooseFloorEvent(3,"CallElevatorBtn"));
     }//GEN-LAST:event_CallElevatorBtn3ActionPerformed
 
     private void CallElevatorBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn2ActionPerformed
-        Config.sendEvent(new CallElevatorEvent(2, MoveDirectionEnum.NONE));
+        Config.sendEvent(new ChooseFloorEvent(2,"CallElevatorBtn"));
     }//GEN-LAST:event_CallElevatorBtn2ActionPerformed
 
     private void Floor1btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor1btnActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(1));
+        Config.sendEvent(new ChooseFloorEvent(1,"Floor"));
     }//GEN-LAST:event_Floor1btnActionPerformed
 
     private void DoorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoorBtnActionPerformed

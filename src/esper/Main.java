@@ -4,6 +4,7 @@ import event.CallElevatorEvent.MoveDirectionEnum;
 import model.Elevator;
 import model.ElevatorTranslateThread;
 import model.Request;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -21,45 +22,26 @@ public class Main {
         //System.out.println(NativeDebug.getClass(args, args));
         // Create Elevator
         final Elevator elevator = new Elevator();
+        ElevatorTranslateThread elv = new ElevatorTranslateThread(elevator,new Request(1, new JButton() ) );
+        System.out.println(elevator.getGui().getCarPnel().getLocation().y);
 
-        //210, 330, 437
-       /* Config.createStatement("select requestedFloor, direction from CallElevatorEvent")
+        Config.createStatement("select destinationFloor, type from ChooseFloorEvent")
                 .setSubscriber(new Object() {
-                    public void update(int floorNumber, MoveDirectionEnum direction) throws InterruptedException {
+                    public void update(int destinationFloor, String type) throws InterruptedException {
                         JButton clickedBtn = null;
-                        String btnName;
-                        
-                        if (direction == MoveDirectionEnum.DOWNWARDS)
-                            btnName = "D";
-                        else
-                            btnName = "U";
-                        
-                        btnName += floorNumber;
-                        
-                        //Searching for the clicked button
-                        for (Component c : elevator.getGui().getElevPanel().getComponents()){
-                            if (c instanceof JButton){
-                                if (((JButton)c).getName().compareToIgnoreCase(btnName) == 0){
-                                    clickedBtn = (JButton)c;
-                                }
-                            }
+                        String btnName = "";
+                        JPanel panel;
+                        if(type.equals("CallElevatorBtn")){
+                            btnName = type + destinationFloor;
+                            panel = elevator.getGui().getCallPanl();
                         }
-                        
-                        if (elevator.getCurrentFloor() != floorNumber){
-                            clickedBtn.setBackground(Color.YELLOW);
-                            //elevator.AddRequest(new Request(floorNumber, direction, clickedBtn));
+                        else{
+                            btnName = type + destinationFloor + "btn";
+                            panel = elevator.getGui().getElevatorControllerPanel();
                         }
-                    }
-                });
-        */
-        Config.createStatement("select destinationFloor from ChooseFloorEvent")
-                .setSubscriber(new Object() {
-                    public void update(int destinationFloor) throws InterruptedException {
-                        JButton clickedBtn = null;
-                        String btnName = "Floor" + destinationFloor + "btn";
+
                         //Searching for the clicked button
-                        int i = 1;
-                        for (Component c : elevator.getGui().getElevatorControllerPanel().getComponents()) {
+                        for (Component c : panel.getComponents()) {
                             try {
                                 if (c instanceof JButton) {
                                     if (c.getName().compareToIgnoreCase(btnName) == 0) {
@@ -72,39 +54,15 @@ public class Main {
                         }
 
                         if (elevator.getCurrentFloor() != destinationFloor) {
-                            clickedBtn.setBackground(Color.YELLOW);
+                            clickedBtn.setBackground(Color.GREEN);
                             elevator.AddRequest(new Request(destinationFloor,clickedBtn));
                         }
                     }
                 });
 
-
-//        Config.createStatement("select requestedFloor, direction from CallElevatorEvent")
-//                .setSubscriber(new Object() {
-//                    public void update(int floorNum, MoveDirectionEnum direction) throws InterruptedException {
-//
-//                        JButton callBtn = null;
-//                        String btnName = "CallElevatorBtn";
-//                        btnName += floorNum;
-//
-//                        for (Component c : elevator.getGui().getCallPanl().getComponents()) {
-//                            if (c instanceof JButton) {
-//                                if (c.getName().compareToIgnoreCase(btnName) == 0) {
-//                                    callBtn = (JButton) c;
-//                                }
-//                            }
-//                        }
-//                        if (elevator.getCurrentFloor() != floorNum) {
-//                            callBtn.setBackground(Color.YELLOW);
-//                            elevator.AddRequest(new Request(destinationFloor,clickedBtn));
-//                        }
-//                    }
-//                });
-
         Config.createStatement("select direction, isMoving, carPositionY, currentFloor from ElevatorStateReading")
                 .setSubscriber(new Object() {
                     public void update(MoveDirectionEnum direction, boolean isMoving, int carPositionY, int currentFloor) throws InterruptedException {
-                        System.out.println("in");
                         elevator.setDirection(direction);
                         elevator.setMoving(isMoving);
                         elevator.setElevatorPositionY(carPositionY);

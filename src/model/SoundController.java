@@ -37,7 +37,7 @@ public class SoundController {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loc);
             waitingMusic = AudioSystem.getClip();
             waitingMusic.open(audioInputStream);
-            waitingMusic.start();
+           // waitingMusic.start();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.out.println(e.getMessage());
         }

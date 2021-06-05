@@ -14,8 +14,7 @@ import java.util.logging.Logger;
 
 public class ElevatorTranslateThread extends TimerTask {
 
-    //210, 330, 437
-    int[] FloorY = {437, 330, 210};
+    int[] FloorY = {548, 441, 320 };
 
     private final Elevator elevator;
     private final Request request;
@@ -51,10 +50,8 @@ public class ElevatorTranslateThread extends TimerTask {
 
     @Override
     public void run() {
-        System.out.println("HERE");
         int FloorIdx = request.getRequestedFloor() - 1;
         JPanel Elevator = elevator.getGui().getCarPnel();
-
         if (Math.abs(Elevator.getLocation().y - FloorY[FloorIdx]) > 0) {  // checks if the elevator isMoving
             if (Elevator.getLocation().y > FloorY[FloorIdx]) {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1);
