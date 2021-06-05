@@ -6,11 +6,13 @@ public class ElevatorStateReading {
     private final boolean isMoving;
     private final MoveDirectionEnum direction;
     private final int currentFloor;
+    private final int carPositionY;
 
-    public ElevatorStateReading(boolean isMoving, MoveDirectionEnum direction, int currentFloor) {
+    public ElevatorStateReading(MoveDirectionEnum direction, boolean isMoving, int carPositionY, int currentFloor) {
         this.isMoving = isMoving;
         this.direction = direction;
         this.currentFloor = currentFloor;
+        this.carPositionY = carPositionY;
     }
 
     public boolean isIsMoving() {
@@ -24,6 +26,12 @@ public class ElevatorStateReading {
     public int getCurrentFloor() {
         return currentFloor;
     }
-    
-    
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public int getCarPositionY() {
+        return carPositionY;
+    }
 }
