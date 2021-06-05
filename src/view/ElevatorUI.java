@@ -6,6 +6,9 @@
 package view;
 
 import esper.Config;
+
+import event.ChooseFloorEvent;
+
 import events.CallCarEvent;
 import javax.swing.*;
 
@@ -127,6 +130,11 @@ public class ElevatorUI extends javax.swing.JFrame {
         });
 
         Floor3btn.setText("Floor 3");
+        Floor3btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Floor3btnActionPerformed(evt);
+            }
+        });
 
         StopBtn.setText("Emergency STOP");
 
@@ -209,7 +217,6 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addComponent(LightOn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
         );
-
         javax.swing.GroupLayout ElevPanelLayout = new javax.swing.GroupLayout(ElevPanel);
         ElevPanel.setLayout(ElevPanelLayout);
         ElevPanelLayout.setHorizontalGroup(
@@ -287,6 +294,12 @@ public class ElevatorUI extends javax.swing.JFrame {
         Config.sendEvent(new CallCarEvent(1));
     }//GEN-LAST:event_CallElevatorBtn1ActionPerformed
 
+
+
+    private void Floor3btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor3btnActionPerformed
+        Config.sendEvent(new ChooseFloorEvent(3));
+    }//GEN-LAST:event_Floor3btnActionPerformed
+    
     private void CallElevatorBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn3ActionPerformed
         Config.sendEvent(new CallCarEvent(3));
     }//GEN-LAST:event_CallElevatorBtn3ActionPerformed
@@ -294,6 +307,7 @@ public class ElevatorUI extends javax.swing.JFrame {
     private void CallElevatorBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn2ActionPerformed
         Config.sendEvent(new CallCarEvent(2));
     }//GEN-LAST:event_CallElevatorBtn2ActionPerformed
+
 
     /**
      * @param args the command line arguments

@@ -3,6 +3,10 @@ package model;
 import view.ElevatorUI;
 
 public class Elevator {
+  
+    public Elevator() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
 
     private final ElevatorUI gui;
     private int currentFloor;
