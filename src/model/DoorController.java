@@ -6,8 +6,6 @@
 package model;
 
 import java.awt.Color;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -15,10 +13,10 @@ import javax.swing.ImageIcon;
  */
 public class DoorController {
     private boolean isOpen;
-    private final ElevatorController elevator;
+    private final ElevatorControlCabinet elevator;
     
 
-    public DoorController(boolean isOpen, ElevatorController elevator) {
+    public DoorController(boolean isOpen, ElevatorControlCabinet elevator) {
         this.isOpen = isOpen;
         this.elevator = elevator;
     }

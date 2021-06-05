@@ -2,7 +2,7 @@ package model;
 
 import esper.Config;
 
-import events.DoorEvent;
+import events.DoorSensorReading;
 import events.ElevatorStateReading;
 
 import javax.swing.*;
@@ -11,14 +11,14 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ElevatorTranslateThread extends TimerTask {
+public class ElevatorMachineDrive extends TimerTask {
 
-    int[] FloorY = {456, 250, 88};
+    int[] FloorY = {450, 340, 240};
 
-    private final Elevator elevator;
+    private final ElevatorCar elevator;
     private final Request request;
 
-    public ElevatorTranslateThread(Elevator elevator, Request request) {
+    public ElevatorMachineDrive(ElevatorCar elevator, Request request) {
 
         this.elevator = elevator;
         this.request = request;
@@ -27,10 +27,10 @@ public class ElevatorTranslateThread extends TimerTask {
             try {
                 this.cancel();
             } catch (Throwable ex) {
-                Logger.getLogger(ElevatorTranslateThread.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ElevatorMachineDrive.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            Config.sendEvent(new DoorEvent(false));
+            Config.sendEvent(new DoorSensorReading(false));
         }
     }
 
@@ -78,8 +78,8 @@ public class ElevatorTranslateThread extends TimerTask {
             }
         } else {
             Config.sendEvent(new ElevatorStateReading(false, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
-            Config.sendEvent(new DoorEvent(true));
-            request.getClickedBtn().setBackground(Color.CYAN);
+            Config.sendEvent(new DoorSensorReading(true));
+            request.getClickedBtn().setBackground(Color.PINK);
             elevator.getGui().getDoorStatus().setText("Open");
             elevator.getGui().getWeightInput().setEnabled(true);
             elevator.getGui().getEmergencyStopBtn().setEnabled(false);
@@ -89,7 +89,7 @@ public class ElevatorTranslateThread extends TimerTask {
             for (Component c : elevator.getGui().getCallPanl().getComponents()) {
                 if (c instanceof JButton) {
                     if (c.getName().compareToIgnoreCase(request.getClickedBtn().getName()) == 0) {
-                        c.setBackground(Color.CYAN);
+                        c.setBackground(Color.PINK);
                         elevator.getGui().getDoorStatus().setText("Open");
                         elevator.getGui().getLightPanel().setBackground(Color.GREEN);
                         elevator.getGui().getWeightInput().setEnabled(true);
@@ -102,7 +102,7 @@ public class ElevatorTranslateThread extends TimerTask {
                 if (c instanceof JButton) {
                     try {
                         if (((JButton) c).getName().compareToIgnoreCase("Floor" + request.getRequestedFloor() + "btn") == 0) {
-                            c.setBackground(Color.CYAN);
+                            c.setBackground(Color.PINK);
                             break;
                         }
                     } catch (Exception e) {

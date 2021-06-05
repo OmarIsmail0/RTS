@@ -4,15 +4,15 @@ import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import events.*;
-import events.EmergencyStopEvent;
+import events.PressEmergencyStopEvent;
 
 public class Config {
     private static EPServiceProvider engine = EPServiceProviderManager.getDefaultProvider();
     
     public static void registerEvents() {
         //engine.getEPAdministrator().getConfiguration().addEventType(CarCallEvent.class);
-        engine.getEPAdministrator().getConfiguration().addEventType(EmergencyStopEvent.class);
-        engine.getEPAdministrator().getConfiguration().addEventType(DoorEvent.class);
+        engine.getEPAdministrator().getConfiguration().addEventType(PressEmergencyStopEvent.class);
+        engine.getEPAdministrator().getConfiguration().addEventType(DoorSensorReading.class);
         engine.getEPAdministrator().getConfiguration().addEventType(WeightSensorReading.class);
         engine.getEPAdministrator().getConfiguration().addEventType(ChooseFloorEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(ElevatorStateReading.class);

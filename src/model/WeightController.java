@@ -8,9 +8,9 @@ import java.util.logging.Logger;
 public class WeightController extends Thread {
 
     private int weight;
-    private Elevator elevator;
+    private ElevatorCar elevator;
 
-    public WeightController(Elevator elevator) {
+    public WeightController(ElevatorCar elevator) {
         this.weight = 0;
         this.elevator = elevator;
     }

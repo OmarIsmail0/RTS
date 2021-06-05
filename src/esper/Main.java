@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import model.Elevator;
-import model.ElevatorController;
+import model.ElevatorCar;
 import model.Request;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -18,9 +17,9 @@ public class Main {
         Config.registerEvents();
 
         //final EmergencyStopController elevator = new EmergencyStopController();
-        final Elevator elevator = new Elevator();
-
-        Config.createStatement("select trigger_emergency from EmergencyStopEvent")
+        final ElevatorCar elevator = new ElevatorCar();
+       // System.out.println(elevator.getGui().getCarPnel().getLocation().y);
+        Config.createStatement("select trigger_emergency from PressEmergencyStopEvent")
                 .setSubscriber(new Object() {
                     public void update(boolean status) throws InterruptedException {
 
@@ -31,7 +30,7 @@ public class Main {
                     }
                 });
 
-        Config.createStatement("select doorstate from DoorEvent")
+        Config.createStatement("select doorstate from DoorSensorReading")
                 .setSubscriber(new Object() {
                     public void update(boolean isOpen) throws InterruptedException {
                         elevator.getDoorCtrl().changeDoorStatus(isOpen);

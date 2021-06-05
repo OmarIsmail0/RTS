@@ -5,11 +5,11 @@ import view.ElevatorUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class Elevator {
+public class ElevatorCar {
     
     private final ElevatorUI gui;
     private final DoorController doorCtrl;
-    private final ElevatorController ctrl;
+    private final ElevatorControlCabinet ctrl;
     private final WeightController weightCtrl;
     private int currentFloor;
     private boolean isMoving;
@@ -17,10 +17,10 @@ public class Elevator {
     private int elevatorPositionY;
 
 
-    public Elevator() {
+    public ElevatorCar() {
         this.gui = new ElevatorUI();
         this.gui.getEmergencyStopBtn().setEnabled(false);
-        this.ctrl = new ElevatorController(this);
+        this.ctrl = new ElevatorControlCabinet(this);
         this.weightCtrl = new WeightController(this);
         this.doorCtrl = new DoorController(true, ctrl);
         this.currentFloor = 1;
@@ -81,7 +81,7 @@ public class Elevator {
         return isMoving;
     }
 
-    public ElevatorController getCtrl() {
+    public ElevatorControlCabinet getCtrl() {
         return ctrl;
     }
 
