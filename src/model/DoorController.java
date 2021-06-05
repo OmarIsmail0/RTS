@@ -31,13 +31,13 @@ public class DoorController {
             elevator.getGUI().getDoorBtn().setEnabled(false);
             elevator.getGUI().getCloseDoorBtn().setEnabled(true);
 
-            elevator.getSound().playOpenDoorSound();
-            try {
-                Thread.sleep(150);
-                elevator.getSound().setOpenDoorSound(null);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            
+//            try {
+//                Thread.sleep(150);
+//                elevator.getSound().setOpenDoorSound(null);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
         else {
             elevator.getGUI().getDoorBtn().setEnabled(true);

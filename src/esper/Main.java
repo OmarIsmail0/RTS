@@ -34,6 +34,7 @@ public class Main {
                         elevator.getDoorCtrl().changeDoorStatus(doorOpen);
                         if (doorOpen == true) {
                             elevator.manageDoor("Open");
+                            elevator.getCtrl().getSound().playOpenDoorSound();
                         } else {
                             elevator.manageDoor("Closed");
                         }

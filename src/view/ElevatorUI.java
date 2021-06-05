@@ -45,7 +45,6 @@ public class ElevatorUI extends javax.swing.JFrame {
         Floor2btn.setName("Floor2btn");
         Floor3btn.setName("Floor3btn");
         
-        
     }
 
     /**

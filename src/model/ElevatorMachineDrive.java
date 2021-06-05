@@ -87,7 +87,7 @@ public class ElevatorMachineDrive extends TimerTask {
             elevator.manageDoor("Open");
             elevator.getGui().getWeightInput().setEnabled(true);
             elevator.getGui().getEmergencyStopBtn().setEnabled(false);
-            elevator.getGui().getDoorBtn().setEnabled(false);
+            elevator.getGui().getDoorBtn().setEnabled(true);
             elevator.getGui().getCloseDoorBtn().setEnabled(true);
             str = String.valueOf(FloorIdx+1);
             elevator.getGui().getFloorNo().setText(str);
@@ -99,7 +99,7 @@ public class ElevatorMachineDrive extends TimerTask {
                         elevator.getGui().getLightPanel().setBackground(Color.GREEN);
                         elevator.getGui().getWeightInput().setEnabled(true);
                         elevator.getGui().getEmergencyStopBtn().setEnabled(false);
-                        elevator.getGui().getDoorBtn().setEnabled(false);
+                        elevator.getGui().getDoorBtn().setEnabled(true);
                         elevator.getGui().getCloseDoorBtn().setEnabled(true);
                     }
                 }
