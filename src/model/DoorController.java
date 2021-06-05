@@ -22,14 +22,14 @@ public class DoorController {
     }
     
     
-    public void changeDoorStatus(boolean doorStatus){
-        //System.out.println(doorStatus);
-        this.isOpen = doorStatus;
+    public void changeDoorStatus(boolean isOpen){
+        this.isOpen = isOpen;
 
-        if (doorStatus == true){
+        if (isOpen == true){
             elevator.getGUI().getLightPanel().setBackground(Color.GREEN);
-            elevator.getGUI().getDoorStatus().setText("Open");
+            elevator.getElevator().getGui().getDoorStatus().setText("Open");
             elevator.getGUI().getDoorBtn().setEnabled(false);
+            elevator.getGUI().getCloseDoorBtn().setEnabled(true);
 
             elevator.getSound().playOpenDoorSound();
             try {
@@ -38,27 +38,20 @@ public class DoorController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
         else {
-            elevator.getGUI().getLightPanel().setBackground(Color.RED);
-            elevator.getGUI().getDoorStatus().setText("Closed");
             elevator.getGUI().getDoorBtn().setEnabled(true);
+            elevator.getGUI().getCloseDoorBtn().setEnabled(false);
+            elevator.getGUI().getLightPanel().setBackground(Color.RED);
+            elevator.getElevator().getGui().getDoorStatus().setText("Closed");
         }
-        
-        
     }
 
     public boolean isIsOpen() {
         return isOpen;
     }
 
-    
-
     public void setIsOpen(boolean isOpen) {
         this.isOpen = isOpen;
     }
-    
-    
-    
 }

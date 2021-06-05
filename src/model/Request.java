@@ -3,17 +3,17 @@ import javax.swing.JButton;
 
 public class Request {
   
-    private static int ID_COUNTER = 1;
+    private static int count = 1;
     private final int requestID;
     private final int requestedFloor;
     private final JButton clickedBtn;
 
     public Request(int requestedFloor, JButton clickedBtn) {
-        this.requestID = ID_COUNTER;
+        this.requestID = count;
         this.requestedFloor = requestedFloor;
         this.clickedBtn = clickedBtn;
 
-        ID_COUNTER++;
+        count++;
     }
 
     public int getRequestID() {

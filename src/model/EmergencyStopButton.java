@@ -37,8 +37,6 @@ public class EmergencyStopButton {
             @Override
             public void run() {
                 while(true){
-                   
-                    //elevator.getDoor().setDoorState(true);
                     if (elevator.getGUI().getEmergencyStopBtn().getBackground() != Color.RED) {
                         elevator.getGUI().getEmergencyStopBtn().setBackground(Color.RED);
                         

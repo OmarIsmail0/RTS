@@ -3,7 +3,6 @@ package events;
 public class ChooseFloorEvent {
 
     private final int destinationFloor;
-
     private final String type;
 
     public ChooseFloorEvent(int destinationFloor, String type) {

@@ -18,24 +18,21 @@ public class ElevatorCar {
 
 
     public ElevatorCar() {
-        this.gui = new ElevatorUI();
-        this.gui.getEmergencyStopBtn().setEnabled(false);
-        this.ctrl = new ElevatorControlCabinet(this);
-        this.weightCtrl = new WeightController(this);
-        this.doorCtrl = new DoorController(true, ctrl);
-        this.currentFloor = 1;
+        gui = new ElevatorUI();
         gui.setVisible(true);
+        gui.getEmergencyStopBtn().setEnabled(false);
+        ctrl = new ElevatorControlCabinet(this);
+        weightCtrl = new WeightController(this);
+        doorCtrl = new DoorController(true, ctrl);
+        currentFloor = 1;
     }
 
-    public void AddRequest(Request request) {
+    public void CreateRequest(int destFloor, JButton btn) {
+        Request request = new Request(destFloor, btn);
         this.ctrl.AcceptRequest(request);
     }
 
-
-    public void RunEmergency() {
-        this.gui.getEmergencyStopBtn().setEnabled(false);
-        this.gui.getElevatorPanel().setEnabled(false);
-        this.gui.getCallPanl().setEnabled(false);
+    public void StartAlarm() {
         SoundController.getWaitingMusic().close();
         for (Component c : this.getGui().getElevatorPanel().getComponents()) {
             if (c instanceof JButton) {
@@ -49,19 +46,16 @@ public class ElevatorCar {
                 c.setBackground(java.awt.Color.RED);
             }
         }
-        gui.getLightPanel().setBackground(Color.RED);
-        gui.getDoorStatus().setText("Closed");
         ctrl.getSound().playEmergencySound();
-
+        this.isMoving = false;
+        manageDoor("Close");
     }
-
-
-    public void OpenDoor() {
-        this.doorCtrl.changeDoorStatus(true);
-    }
-
-    public void CloseDoor() {
-        this.doorCtrl.changeDoorStatus(false);
+    
+    public void manageDoor(String type){
+        if(type.equals("Open"))
+            doorCtrl.changeDoorStatus(true);
+        else
+            doorCtrl.changeDoorStatus(false);
     }
 
     /*-------Setters & Getters-------*/
