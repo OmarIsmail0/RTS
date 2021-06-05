@@ -13,9 +13,14 @@ public class DoorController {
         this.isOpen = isOpen;
     }
 
-    public void setElevator() {
+    public void setElevator(boolean isOpen) {
+        setIsOpen(isOpen);
         if(this.isOpen == false){
-            
+            elevator.getGui().getDoorStatusField().setText("CLOSED");
+        }
+        else{
+            elevator.getGui().getDoorStatusField().setText("OPEN");
+            elevator.getCtrl().getAudioController().playDoorSound();
         }
     }
 

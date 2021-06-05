@@ -6,19 +6,27 @@ import view.ElevatorUI;
 public class Elevator {
     
     private final ElevatorUI gui;
+    private final DoorController doorCtrl;
+    private final ElevatorController ctrl;
     private int currentFloor;
     private boolean isMoving;
-    private final RequestElevator controller;
+    private boolean emergencyTrigger;
 
 
     private int elevatorPositionY;
+    
     private CallElevatorEvent.MoveDirectionEnum direction;
 
     public Elevator() {
         this.gui = new ElevatorUI();
+        this.doorCtrl = new DoorController(true,this);
+        this.ctrl = new ElevatorController(this);
         this.currentFloor = 1;
         gui.setVisible(true);
-        this.controller = new RequestElevator(this);
+    }
+    
+    public void AddRequest(Request request){
+        this.ctrl.AcceptRequest(request);
     }
 
     public ElevatorUI getGui() {
@@ -37,16 +45,18 @@ public class Elevator {
         return isMoving;
     }
 
-    public void AddRequest(Request request){
-        this.controller.AcceptRequest(request);
+    public ElevatorController getCtrl() {
+        return ctrl;
     }
+
+    
 
     public boolean isMoving() {
         return isMoving;
     }
 
-    public RequestElevator getController() {
-        return controller;
+    public boolean isEmergencyTrigger() {
+        return emergencyTrigger;
     }
 
     public CallElevatorEvent.MoveDirectionEnum getDirection() {
@@ -67,5 +77,9 @@ public class Elevator {
 
     public void setElevatorPositionY(int elevatorPositionY) {
         this.elevatorPositionY = elevatorPositionY;
+    }
+    
+    public DoorController getDoorCtrl() {
+        return doorCtrl;
     }
 }
