@@ -15,8 +15,7 @@ import java.util.logging.Logger;
 public class ElevatorTranslateThread extends TimerTask {
 
     //210, 330, 437
-
-    int [] FloorY = {437, 330, 210};
+    int[] FloorY = {437, 330, 210};
 
     private final Elevator elevator;
     private final Request request;
@@ -37,7 +36,7 @@ public class ElevatorTranslateThread extends TimerTask {
         }
     }
 
-    public int getCurrentFloor(int Y){
+    public int getCurrentFloor(int Y) {
 
         if (Y >= FloorY[0] - 1) {
             return 1;
@@ -45,19 +44,18 @@ public class ElevatorTranslateThread extends TimerTask {
             return 2;
         } else if (Y < FloorY[1] && Y >= FloorY[2]) {
             return 3;
-        } else{
+        } else {
             return 0;
         }
     }
 
-
     @Override
     public void run() {
-
+        System.out.println("HERE");
         int FloorIdx = request.getRequestedFloor() - 1;
         JPanel Elevator = elevator.getGui().getCarPnel();
 
-        if (Math.abs(Elevator.getLocation().y - FloorY[FloorIdx]) > 0){  // checks if the elevator isMoving
+        if (Math.abs(Elevator.getLocation().y - FloorY[FloorIdx]) > 0) {  // checks if the elevator isMoving
             if (Elevator.getLocation().y > FloorY[FloorIdx]) {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1);
                 Config.sendEvent(new ElevatorStateReading(CallElevatorEvent.MoveDirectionEnum.UPWARDS, true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
@@ -65,7 +63,7 @@ public class ElevatorTranslateThread extends TimerTask {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y + 1);
                 Config.sendEvent(new ElevatorStateReading(CallElevatorEvent.MoveDirectionEnum.DOWNWARDS, true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
             }
-        }else {
+        } else {
             Config.sendEvent(new ElevatorStateReading(CallElevatorEvent.MoveDirectionEnum.NONE, false, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
             Config.sendEvent(new LightSensorReading(LightsEnum.ON));
             request.getClickedBtn().setBackground(Color.WHITE);
@@ -78,10 +76,15 @@ public class ElevatorTranslateThread extends TimerTask {
             }
             for (Component c : elevator.getGui().getElevatorControllerPanel().getComponents()) {
                 if (c instanceof JButton) {
-                    if (((JButton) c).getName().compareToIgnoreCase("Floor" + request.getRequestedFloor() + "btn") == 0) {
-                        ((JButton) c).setBackground(Color.WHITE);
-                        break;
+                    try {
+                        if (((JButton) c).getName().compareToIgnoreCase("Floor" + request.getRequestedFloor() + "btn") == 0) {
+                            ((JButton) c).setBackground(Color.WHITE);
+                            break;
+                        }
+                    } catch (Exception e) {
+
                     }
+
                 }
             }
             this.cancel();
