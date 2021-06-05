@@ -3,7 +3,7 @@ package esper;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
-import events.DoorEvent;
+import events.*;
 import events.EmergencyStopEvent;
 
 public class Config {
@@ -13,7 +13,9 @@ public class Config {
         //engine.getEPAdministrator().getConfiguration().addEventType(CarCallEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(EmergencyStopEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(DoorEvent.class);
-       
+      
+        engine.getEPAdministrator().getConfiguration().addEventType(ChooseFloorEvent.class);
+        engine.getEPAdministrator().getConfiguration().addEventType(ElevatorStateReading.class);
         
         System.out.println("Events Successfully Registered.");
     }

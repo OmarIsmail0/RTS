@@ -8,6 +8,9 @@ import view.ElevatorUI;
 import esper.Config;
 
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,25 +23,33 @@ import javax.swing.JLabel;
 public class ElevatorController {
     // The Elevator GUI
     private final ElevatorUI gui;
-    private final DoorController doorc;
+    //private final DoorController doorc;
     private final SoundController sound;
     
+    private final Elevator elevator;
+    private final Timer requestManager;
+    private final ArrayList<Request> Requests;
     // Elevator Components
     
     // Elevators StatusW
     private boolean emergencyTrigger;
     //private boolean isOpen;
     
-    public ElevatorController() {
+ 
+    public ElevatorController(Elevator elevator) {
+        this.elevator = elevator;
+        this.requestManager = new Timer();
         this.gui = new ElevatorUI();
-        gui.setLocationRelativeTo(null);
-        gui.setVisible(true);
-        this.doorc = new DoorController(this);
+        this.Requests = new ArrayList<>();
+        //this.doorc = new DoorController(true,this); // asdasdassadQAWE
+        this.requestManager.schedule(new RequestManager(elevator, this), 0, 1000);
         this.sound = new SoundController();
         // Initialize Elevator Status
     }
     
-    public void OpenDoor(){
+    
+    
+/*    public void OpenDoor(){
         this.doorc.changeDoorStatus(true);
     }
     
@@ -47,34 +58,10 @@ public class ElevatorController {
     }
     
     
-    public void RunEmergency(){
-       this.gui.getEmergencyStopBtn().setEnabled(false);
-       this.gui.getElevatorPanel().setEnabled(false);
-       this.gui.getElevPanel().setEnabled(false);
-       
-        for (Component c : this.getGUI().getElevatorPanel().getComponents()) {
-            if (c instanceof JButton) {
-                c.setEnabled(false);
-                c.setBackground(java.awt.Color.RED);
-                //System.out.print("Emergency disabled");
-            }
-        }
-        for (Component c : this.getGUI().getElevPanel().getComponents()) {
-            if (c instanceof JButton) {
-                c.setEnabled(false);
-                c.setBackground(java.awt.Color.RED);
-                //System.out.print("Emergency disabled");
-            }
-       
-         }
-       // getSound().playEmergencySound();
-      //  getSound().play("C:\\Users\\Laptop Shop\\Downloads\\Music\\EmergencyAlarm.wav");
-        System.out.print("OHCOMMON!!");
-    }
     
     public DoorController getDoorController(){
         return doorc;
-    }
+    }*/
 
     public SoundController getSound() {
         return sound;
@@ -95,7 +82,49 @@ public class ElevatorController {
     }
     
     
+    public void ChangeDoorState(boolean doorState){
+        if (elevator.getIsMoving() == false){
+            this.elevator.getDoorCtrl().changeDoorStatus(doorState);
+        }
+    }
     
+    public void AcceptRequest(Request request){
+        boolean flagExist = false;
+        for (Request r : Requests){
+            if (r.getRequestedFloor() == request.getRequestedFloor() || r.getRequestID() == request.getRequestID() || request.getRequestedFloor() == elevator.getCurrentFloor()){
+                flagExist = true;
+            }
+        }
+        if (!flagExist)
+            Requests.add(request);
+        
+    }
+
+    public ArrayList<Request> getRequests() {
+        return Requests;
+    }
+
+    public Request getNextRequest(){
+        Collections.sort(Requests, (a, b) -> Math.abs(elevator.getCurrentFloor() - a.getRequestedFloor()) < Math.abs(elevator.getCurrentFloor() - b.getRequestedFloor()) ? -1 : 1);
+        if (Requests.isEmpty())
+            return null;
+        else{
+            return Requests.remove(0);
+        }
+    }
+    
+    public void MoveElevator(Request r){
+        if (r.getRequestedFloor() != elevator.getCurrentFloor()){
+            elevator.getGui().getDoorBtn().setEnabled(false);
+            //elevator.getGui().getBtnCloseDoor().setEnabled(false);
+            
+         if (!elevator.getIsMoving())
+              sound.playWaitingMusic();
+         
+            Timer t = new Timer();
+            t.schedule(new ElevatorTranslateThread(elevator, r), 500, 7);
+        }
+    }
     
 }
 

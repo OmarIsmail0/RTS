@@ -1,5 +1,4 @@
 package model;
-import event.CallElevatorEvent.MoveDirectionEnum;
 import javax.swing.JButton;
 
 public class Request {

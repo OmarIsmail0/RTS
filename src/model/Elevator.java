@@ -1,7 +1,9 @@
 package model;
 
-import event.CallElevatorEvent;
 import view.ElevatorUI;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Elevator {
     
@@ -11,24 +13,61 @@ public class Elevator {
     private int currentFloor;
     private boolean isMoving;
     private boolean emergencyTrigger;
-
-
     private int elevatorPositionY;
-    
-    private CallElevatorEvent.MoveDirectionEnum direction;
+
 
     public Elevator() {
         this.gui = new ElevatorUI();
-        this.doorCtrl = new DoorController(true,this);
         this.ctrl = new ElevatorController(this);
+        this.doorCtrl = new DoorController(true, ctrl);
         this.currentFloor = 1;
         gui.setVisible(true);
     }
-    
-    public void AddRequest(Request request){
+
+    public void AddRequest(Request request) {
         this.ctrl.AcceptRequest(request);
     }
 
+
+    public void RunEmergency() {
+        this.gui.getEmergencyStopBtn().setEnabled(false);
+        this.gui.getElevatorPanel().setEnabled(false);
+        this.gui.getCallPanl().setEnabled(false);
+        SoundController.getWaitingMusic().close();
+        for (Component c : this.getGui().getElevatorPanel().getComponents()) {
+            if (c instanceof JButton) {
+                c.setEnabled(false);
+                c.setBackground(java.awt.Color.RED);
+                //System.out.print("Emergency disabled");
+            }
+        }
+        for (Component c : this.getGui().getCallPanl().getComponents()) {
+            if (c instanceof JButton) {
+                c.setEnabled(false);
+                c.setBackground(java.awt.Color.RED);
+                //System.out.print("Emergency disabled");
+            }
+
+        }
+        gui.getLightPanel().setBackground(Color.RED);
+        gui.getDoorStatus().setText("Closed");
+        //  getSound().playEmergencySound();
+        ctrl.getSound().playEmergencySound();
+        System.out.print("OHCOMMON!!");
+
+
+    }
+
+
+    public void OpenDoor() {
+        this.doorCtrl.changeDoorStatus(true);
+    }
+
+    public void CloseDoor() {
+        this.doorCtrl.changeDoorStatus(false);
+    }
+
+    /*-------Setters & Getters-------*/
     public ElevatorUI getGui() {
         return gui;
     }
@@ -49,8 +88,6 @@ public class Elevator {
         return ctrl;
     }
 
-    
-
     public boolean isMoving() {
         return isMoving;
     }
@@ -59,16 +96,8 @@ public class Elevator {
         return emergencyTrigger;
     }
 
-    public CallElevatorEvent.MoveDirectionEnum getDirection() {
-        return direction;
-    }
-
     public void setMoving(boolean moving) {
         isMoving = moving;
-    }
-
-    public void setDirection(CallElevatorEvent.MoveDirectionEnum direction) {
-        this.direction = direction;
     }
 
     public int getElevatorPositionY() {
@@ -78,8 +107,14 @@ public class Elevator {
     public void setElevatorPositionY(int elevatorPositionY) {
         this.elevatorPositionY = elevatorPositionY;
     }
-    
+
     public DoorController getDoorCtrl() {
         return doorCtrl;
     }
+
+    public void setEmergencyTrigger(boolean emergencyTrigger) {
+        this.emergencyTrigger = emergencyTrigger;
+    }
+
+
 }

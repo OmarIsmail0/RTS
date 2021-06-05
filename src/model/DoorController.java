@@ -17,21 +17,30 @@ public class DoorController {
     private boolean isOpen;
     private final ElevatorController elevator;
     
-    
 
-    public DoorController(ElevatorController elevator) {
-        this.isOpen = true;
+    public DoorController(boolean isOpen, ElevatorController elevator) {
+        this.isOpen = isOpen;
         this.elevator = elevator;
     }
     
     
     public void changeDoorStatus(boolean doorStatus){
+        //System.out.println(doorStatus);
         this.isOpen = doorStatus;
+
         if (doorStatus == true){
             elevator.getGUI().getLightPanel().setBackground(Color.GREEN);
             elevator.getGUI().getDoorStatus().setText("Open");
-            //elevator.getController().getAudioController().playOpenDoor();
-           
+
+
+            elevator.getSound().playOpenDoorSound();
+            try {
+                Thread.sleep(150);
+                elevator.getSound().setOpenDoorSound(null);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
         else {
             elevator.getGUI().getLightPanel().setBackground(Color.RED);

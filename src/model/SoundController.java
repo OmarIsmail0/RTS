@@ -1,97 +1,104 @@
 package model;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineListener;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
-import java.io.IOException;
+
  
+
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+
+
+import java.io.IOException;
+import java.net.URL;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+public class SoundController implements LineListener { 
 
-public class SoundController implements LineListener{
-
-    private static Clip openDoorSound;
+    private  Clip openDoorSound;
     private static Clip waitingMusic;
     private static Clip emergencyStopSound;
-     boolean playCompleted;
+    boolean playCompleted;
 
-    public SoundController() {
-    }
-    
-    
-    /*
-    public void playDoorSound() {
-        if (openDoorSound != null)
-            return;
-        
-        try {
-            URL loc = getClass().getResource("../view/sounds/Emergency.wav");
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loc);
-            openDoorSound = AudioSystem.getClip();
-            openDoorSound.open(audioInputStream);
-            openDoorSound.start();
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
-            System.out.println(e.getMessage());
-        }
-    }
     
     public void playWaitingMusic() {
         if (waitingMusic != null)
             return;
         
         try {
+
             URL loc = getClass().getResource("../sounds/ElevatorMusic.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loc);
             waitingMusic = AudioSystem.getClip();
             waitingMusic.open(audioInputStream);
             waitingMusic.start();
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void playEmergencySound() {
-        System.out.print("1");
-        if (emergencyStopSound != null){
-        System.out.print("2");
+
+    public static void setWaitingMusic(Clip waitingMusic) {
+        SoundController.waitingMusic = waitingMusic;
+    }
+
+    public static Clip getEmergencyStopSound() {
+        return emergencyStopSound;
+    }
+
+    public void setOpenDoorSound(Clip openDoorSound) {
+        this.openDoorSound = openDoorSound;
+    }
+
+    public void playOpenDoorSound() {
+        if (openDoorSound != null){
+
             return;
         }
-        System.out.print("3");
+
         try {
-            System.out.print("4");
-            URL loc = getClass().getResource("../view/sounds/Emergency.wav");
-            System.out.print("5");
-            AudioInputStream AOC = AudioSystem.getAudioInputStream(loc);
-            System.out.print("6");
-            emergencyStopSound = AudioSystem.getClip();
-            System.out.print("7");
-            emergencyStopSound.open(AOC);
-            System.out.print("8");
-            emergencyStopSound.start();
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+
+            URL loc = getClass().getResource("../sounds/OpenDoor.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loc);
+            openDoorSound = AudioSystem.getClip();
+            openDoorSound.open(audioInputStream);
+            openDoorSound.start();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.print("9");
-    }*/
-    
+    }
+
+    public  Clip getOpenDoorSound() {
+        return openDoorSound;
+    }
+
+    public void playEmergencySound() {
+        if (emergencyStopSound != null){
+            return;
+        }
+
+        try {
+
+            URL loc = getClass().getResource("../sounds/EmergencyAlarm.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loc);
+            emergencyStopSound = AudioSystem.getClip();
+            emergencyStopSound.open(audioInputStream);
+            emergencyStopSound.start();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static Clip getWaitingMusic() {
+        return waitingMusic;
+    }
+
     void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
- 
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
  
@@ -100,7 +107,7 @@ public class SoundController implements LineListener{
             DataLine.Info info = new DataLine.Info(Clip.class, format);
  
             Clip audioClip = (Clip) AudioSystem.getLine(info);
- 
+
             audioClip.addLineListener(this);
  
             audioClip.open(audioStream);
@@ -110,7 +117,7 @@ public class SoundController implements LineListener{
             while (!playCompleted) {
                 // wait for the playback completes
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -131,6 +138,9 @@ public class SoundController implements LineListener{
          
     }
 
+    
+    
+    
     @Override
     public void update(LineEvent event) {
         LineEvent.Type type = event.getType();

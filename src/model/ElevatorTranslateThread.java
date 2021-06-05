@@ -1,10 +1,9 @@
 package model;
 
 import esper.Config;
-import event.CallElevatorEvent;
-import event.ElevatorStateReading;
-import event.LightSensorReading;
-import events.DoorStateSensor;
+
+import events.DoorEvent;
+import events.ElevatorStateReading;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
 
 public class ElevatorTranslateThread extends TimerTask {
 
-    int[] FloorY = {548, 441, 320 };
+    int[] FloorY = {456, 250, 88};
 
     private final Elevator elevator;
     private final Request request;
@@ -31,7 +30,7 @@ public class ElevatorTranslateThread extends TimerTask {
                 Logger.getLogger(ElevatorTranslateThread.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            Config.sendEvent(new LightSensorReading(LightsEnum.OFF));
+            Config.sendEvent(new DoorEvent(false));
         }
     }
 
@@ -55,19 +54,26 @@ public class ElevatorTranslateThread extends TimerTask {
         if (Math.abs(Elevator.getLocation().y - FloorY[FloorIdx]) > 0) {  // checks if the elevator isMoving
             if (Elevator.getLocation().y > FloorY[FloorIdx]) {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1);
-                Config.sendEvent(new ElevatorStateReading(CallElevatorEvent.MoveDirectionEnum.UPWARDS, true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
+                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
+                elevator.getGui().getDoorStatus().setText("Closed");
+                elevator.getGui().getLightPanel().setBackground(Color.GREEN);
             } else {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y + 1);
-                Config.sendEvent(new ElevatorStateReading(CallElevatorEvent.MoveDirectionEnum.DOWNWARDS, true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
+                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
+                elevator.getGui().getDoorStatus().setText("Closed");
+                elevator.getGui().getLightPanel().setBackground(Color.GREEN);
             }
         } else {
-            Config.sendEvent(new ElevatorStateReading(CallElevatorEvent.MoveDirectionEnum.NONE, false, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
-            Config.sendEvent(new LightSensorReading(LightsEnum.ON));
+            Config.sendEvent(new ElevatorStateReading(false, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
+            Config.sendEvent(new DoorEvent(true));
             request.getClickedBtn().setBackground(Color.WHITE);
+            elevator.getGui().getDoorStatus().setText("Open");
             for (Component c : elevator.getGui().getCallPanl().getComponents()) {
                 if (c instanceof JButton) {
-                    if (((JButton) c).getName().compareToIgnoreCase(request.getClickedBtn().getName()) == 0) {
-                        ((JButton) c).setBackground(Color.WHITE);
+                    if (c.getName().compareToIgnoreCase(request.getClickedBtn().getName()) == 0) {
+                        c.setBackground(Color.WHITE);
+                        elevator.getGui().getDoorStatus().setText("Open");
+                        elevator.getGui().getLightPanel().setBackground(Color.GREEN);
                     }
                 }
             }
@@ -75,7 +81,7 @@ public class ElevatorTranslateThread extends TimerTask {
                 if (c instanceof JButton) {
                     try {
                         if (((JButton) c).getName().compareToIgnoreCase("Floor" + request.getRequestedFloor() + "btn") == 0) {
-                            ((JButton) c).setBackground(Color.WHITE);
+                            c.setBackground(Color.WHITE);
                             break;
                         }
                     } catch (Exception e) {
