@@ -5,20 +5,23 @@ import view.ElevatorUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class Elevator {
+public class ElevatorCar {
     
     private final ElevatorUI gui;
     private final DoorController doorCtrl;
-    private final ElevatorController ctrl;
+    private final ElevatorControlCabinet ctrl;
+    private final WeightController weightCtrl;
     private int currentFloor;
     private boolean isMoving;
     private boolean emergencyTrigger;
     private int elevatorPositionY;
 
 
-    public Elevator() {
+    public ElevatorCar() {
         this.gui = new ElevatorUI();
-        this.ctrl = new ElevatorController(this);
+        this.gui.getEmergencyStopBtn().setEnabled(false);
+        this.ctrl = new ElevatorControlCabinet(this);
+        this.weightCtrl = new WeightController(this);
         this.doorCtrl = new DoorController(true, ctrl);
         this.currentFloor = 1;
         gui.setVisible(true);
@@ -38,23 +41,17 @@ public class Elevator {
             if (c instanceof JButton) {
                 c.setEnabled(false);
                 c.setBackground(java.awt.Color.RED);
-                //System.out.print("Emergency disabled");
             }
         }
         for (Component c : this.getGui().getCallPanl().getComponents()) {
             if (c instanceof JButton) {
                 c.setEnabled(false);
                 c.setBackground(java.awt.Color.RED);
-                //System.out.print("Emergency disabled");
             }
-
         }
         gui.getLightPanel().setBackground(Color.RED);
         gui.getDoorStatus().setText("Closed");
-        //  getSound().playEmergencySound();
         ctrl.getSound().playEmergencySound();
-        System.out.print("OHCOMMON!!");
-
 
     }
 
@@ -84,7 +81,7 @@ public class Elevator {
         return isMoving;
     }
 
-    public ElevatorController getCtrl() {
+    public ElevatorControlCabinet getCtrl() {
         return ctrl;
     }
 
@@ -116,5 +113,9 @@ public class Elevator {
         this.emergencyTrigger = emergencyTrigger;
     }
 
+    public WeightController getWeightCtrl() {
+        return weightCtrl;
+    }
 
+    
 }

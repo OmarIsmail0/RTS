@@ -3,10 +3,10 @@ package model;
 import java.util.TimerTask;
 
 public class RequestManager extends TimerTask{
-    private final Elevator elevator;
-    private final ElevatorController controller;
+    private final ElevatorCar elevator;
+    private final ElevatorControlCabinet controller;
 
-    public RequestManager(Elevator elevator, ElevatorController controller) {
+    public RequestManager(ElevatorCar elevator, ElevatorControlCabinet controller) {
         this.elevator = elevator;
         this.controller = controller;
     }
