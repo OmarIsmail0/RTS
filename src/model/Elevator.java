@@ -1,17 +1,18 @@
 package model;
 
+import event.CallElevatorEvent;
 import view.ElevatorUI;
 
 public class Elevator {
-  
-    public Elevator() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-
+    
     private final ElevatorUI gui;
     private int currentFloor;
     private boolean isMoving;
     private final RequestElevator controller;
+
+
+    private int elevatorPositionY;
+    private CallElevatorEvent.MoveDirectionEnum direction;
 
     public Elevator() {
         this.gui = new ElevatorUI();
@@ -40,4 +41,31 @@ public class Elevator {
         this.controller.AcceptRequest(request);
     }
 
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public RequestElevator getController() {
+        return controller;
+    }
+
+    public CallElevatorEvent.MoveDirectionEnum getDirection() {
+        return direction;
+    }
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
+    }
+
+    public void setDirection(CallElevatorEvent.MoveDirectionEnum direction) {
+        this.direction = direction;
+    }
+
+    public int getElevatorPositionY() {
+        return elevatorPositionY;
+    }
+
+    public void setElevatorPositionY(int elevatorPositionY) {
+        this.elevatorPositionY = elevatorPositionY;
+    }
 }
