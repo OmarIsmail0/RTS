@@ -38,7 +38,7 @@ public class ElevatorMachineDrive extends TimerTask {
     }
 
     public int getFloorIndex(int Y) {
-        if (Y >= FloorY[0] - 1)
+            if (Y >= FloorY[0] - 1)
             return 1;
         else if (Y < FloorY[0] && Y >= FloorY[1])
             return 2;
