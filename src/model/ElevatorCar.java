@@ -63,7 +63,7 @@ public class ElevatorCar {
         return gui;
     }
 
-    public int getCurrentFloor() {
+    public int getCurrentFloorIndex() {
         return currentFloor;
     }
 

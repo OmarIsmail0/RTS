@@ -9,7 +9,7 @@ import javax.sound.sampled.Clip;
 
 public class SoundController {
 
-    private Clip openDoorSound, errorSound;
+    private Clip openDoorSound, closeDoorSound, errorSound;
     private static Clip waitingMusic;
     private static Clip emergencyStopSound;
     
@@ -55,6 +55,18 @@ public class SoundController {
             openDoorSound = AudioSystem.getClip();
             openDoorSound.open(audioInputStream);
             openDoorSound.start();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void playCloseDoorSound() {
+        try {
+            URL loc = getClass().getResource("../sounds/CloseDoor.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loc);
+            closeDoorSound = AudioSystem.getClip();
+            closeDoorSound.open(audioInputStream);
+            closeDoorSound.start();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

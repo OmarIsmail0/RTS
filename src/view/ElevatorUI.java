@@ -291,8 +291,6 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Floor1.setIcon(new javax.swing.ImageIcon("M:\\ics\\rts\\RTS-Project\\RTS\\src\\view\\images\\Elevator.1.png")); // NOI18N
-
         javax.swing.GroupLayout CarPnelLayout = new javax.swing.GroupLayout(CarPnel);
         CarPnel.setLayout(CarPnelLayout);
         CarPnelLayout.setHorizontalGroup(
@@ -398,6 +396,7 @@ public class ElevatorUI extends javax.swing.JFrame {
         FloorNo.setBackground(new java.awt.Color(0, 0, 0));
         FloorNo.setFont(new java.awt.Font("Tahoma", 0, 64)); // NOI18N
         FloorNo.setForeground(new java.awt.Color(255, 0, 51));
+        FloorNo.setText("1");
         FloorNo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 5));
         FloorNo.setDisabledTextColor(new java.awt.Color(255, 0, 0));
         FloorNo.addActionListener(new java.awt.event.ActionListener() {
@@ -405,8 +404,6 @@ public class ElevatorUI extends javax.swing.JFrame {
                 FloorNoActionPerformed(evt);
             }
         });
-
-        jLabel3.setIcon(new javax.swing.ImageIcon("M:\\ics\\rts\\RTS-Project\\RTS\\src\\view\\images\\bngv4.png")); // NOI18N
 
         javax.swing.GroupLayout ElevPanelLayout = new javax.swing.GroupLayout(ElevPanel);
         ElevPanel.setLayout(ElevPanelLayout);

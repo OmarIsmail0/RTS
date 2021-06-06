@@ -19,32 +19,31 @@ public class ElevatorMachineDrive extends TimerTask {
     private final ElevatorRequestController request;
 
     public ElevatorMachineDrive(ElevatorCar elevator, ElevatorRequestController request) {
-
         this.elevator = elevator;
         this.request = request;
 
-        if (elevator.getCurrentFloor() == request.getRequestedFloor() || elevator.getIsMoving()) {
+        if (elevator.getCurrentFloorIndex() == request.getRequestedFloor() || elevator.getIsMoving()) {
             try {
                 this.cancel();
             } catch (Throwable ex) {
                 Logger.getLogger(ElevatorMachineDrive.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            Config.sendEvent(new DoorSensorReading(false));
+            if (elevator.getDoorCtrl().isIsOpen()) {
+                Config.sendEvent(new DoorSensorReading(false));
+            }
         }
     }
 
-    public int getCurrentFloor(int Y) {
-
-        if (Y >= FloorY[0] - 1) {
+    public int getFloorIndex(int Y) {
+        if (Y >= FloorY[0] - 1) 
             return 1;
-        } else if (Y < FloorY[0] && Y >= FloorY[1]) {
+        else if (Y < FloorY[0] && Y >= FloorY[1])
             return 2;
-        } else if (Y < FloorY[1] && Y >= FloorY[2]) {
+        else if (Y < FloorY[1] && Y >= FloorY[2])
             return 3;
-        } else {
+        else 
             return 0;
-        }
     }
 
     @Override
@@ -59,30 +58,33 @@ public class ElevatorMachineDrive extends TimerTask {
         if (Math.abs(Elevator.getLocation().y - FloorY[FloorIdx]) > 0) {  // checks if the elevator isMoving
             if (Elevator.getLocation().y > FloorY[FloorIdx]) {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1);
-                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
+                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getFloorIndex(Elevator.getLocation().y)));
+
                 elevator.manageDoor("Closed");
                 elevator.getGui().getWeightInput().setEnabled(false);
                 elevator.getGui().getEmergencyStopBtn().setEnabled(true);
                 elevator.getGui().getDoorBtn().setEnabled(false);
                 elevator.getGui().getLightPanel().setBackground(Color.GREEN);
-                int idx = getCurrentFloor(Elevator.getLocation().y);
+                int idx = getFloorIndex(Elevator.getLocation().y);
                 str = String.valueOf(idx);
                 elevator.getGui().getFloorNo().setText(str);
             } else {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y + 1);
-                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
+                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getFloorIndex(Elevator.getLocation().y)));
                 elevator.manageDoor("Closed");
                 elevator.getGui().getWeightInput().setEnabled(false);
                 elevator.getGui().getEmergencyStopBtn().setEnabled(true);
                 elevator.getGui().getDoorBtn().setEnabled(false);
                 elevator.getGui().getLightPanel().setBackground(Color.GREEN);
-                int idx = getCurrentFloor(Elevator.getLocation().y);
+                int idx = getFloorIndex(Elevator.getLocation().y);
                 str = String.valueOf(idx);
                 elevator.getGui().getFloorNo().setText(str);
             }
         } else {
-            Config.sendEvent(new ElevatorStateReading(false, Elevator.getLocation().y, getCurrentFloor(Elevator.getLocation().y)));
-            Config.sendEvent(new DoorSensorReading(true));
+            Config.sendEvent(new ElevatorStateReading(false, Elevator.getLocation().y, getFloorIndex(Elevator.getLocation().y)));
+            if (elevator.getDoorCtrl().isIsOpen()) {
+                Config.sendEvent(new DoorSensorReading(false));
+            }
             request.getClickedBtn().setBackground(Color.PINK);
             elevator.manageDoor("Open");
             elevator.getGui().getWeightInput().setEnabled(true);
@@ -91,7 +93,6 @@ public class ElevatorMachineDrive extends TimerTask {
             elevator.getGui().getCloseDoorBtn().setEnabled(true);
             str = String.valueOf(FloorIdx + 1);
             elevator.getGui().getFloorNo().setText(str);
-            
 
             for (Component c : elevator.getGui().getCallPanl().getComponents()) {
                 if (c instanceof JButton) {
@@ -121,7 +122,9 @@ public class ElevatorMachineDrive extends TimerTask {
             //Timer
             try {
                 Thread.sleep(5000);
-                Config.sendEvent(new DoorSensorReading(false));
+                if (elevator.getDoorCtrl().isIsOpen()) {
+                    Config.sendEvent(new DoorSensorReading(false));
+                }
             } catch (Exception e) {
 
             }

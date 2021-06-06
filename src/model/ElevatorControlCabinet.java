@@ -21,6 +21,7 @@ public class ElevatorControlCabinet {
         requestManager = new Timer();
         gui = new ElevatorUI();
         Requests = new ArrayList<>();
+        //Request Timer
         requestManager.schedule(new ElevatorRequestController(elevator, this), 0, 1000);
         sound = new SoundController();
     }
@@ -50,7 +51,7 @@ public class ElevatorControlCabinet {
         for (ElevatorRequestController r : Requests) {
             if (r.getRequestedFloor() == request.getRequestedFloor()
                     || r.getRequestID() == request.getRequestID()
-                    || request.getRequestedFloor() == elevator.getCurrentFloor()) {
+                    || request.getRequestedFloor() == elevator.getCurrentFloorIndex()) {
                 flagExist = true;
             }
         }
@@ -65,7 +66,6 @@ public class ElevatorControlCabinet {
     }
 
     public ElevatorRequestController getNextRequest() {
-        Collections.sort(Requests, (a, b) -> Math.abs(elevator.getCurrentFloor() - a.getRequestedFloor()) < Math.abs(elevator.getCurrentFloor() - b.getRequestedFloor()) ? -1 : 1);
         if (Requests.isEmpty()) {
             return null;
         } else {
@@ -74,7 +74,7 @@ public class ElevatorControlCabinet {
     }
 
     public void MoveElevator(ElevatorRequestController r) {
-        if (r.getRequestedFloor() != elevator.getCurrentFloor()) {
+        if (r.getRequestedFloor() != elevator.getCurrentFloorIndex()) {
             elevator.getGui().getDoorBtn().setEnabled(false);
             elevator.getGui().getCloseDoorBtn().setEnabled(false);
 
@@ -83,7 +83,8 @@ public class ElevatorControlCabinet {
             }
 
             Timer t = new Timer();
-            t.schedule(new ElevatorMachineDrive(elevator, r), 500, 7);
+            //Movement Timer
+            t.schedule(new ElevatorMachineDrive(elevator, r), 3000, 1);
         }
     }
 

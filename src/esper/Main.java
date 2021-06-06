@@ -1,5 +1,6 @@
 package esper;
 
+import events.DoorSensorReading;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JButton;
@@ -36,11 +37,12 @@ public class Main {
                             elevator.manageDoor("Open");
                             elevator.getGui().getDoorBtn().setEnabled(false);
                             elevator.getGui().getCloseDoorBtn().setEnabled(true);
-                            elevator.getCtrl().getSound().playOpenDoorSound();
+                            
                         } else {
                             elevator.manageDoor("Closed");
                             elevator.getGui().getCloseDoorBtn().setEnabled(false);
                             elevator.getGui().getDoorBtn().setEnabled(true);
+                            elevator.getCtrl().getSound().playCloseDoorSound();
                         }
                     }
                 });
@@ -72,7 +74,7 @@ public class Main {
                             }
                         }
 
-                        if (elevator.getCurrentFloor() != destinationFloor) {
+                        if (elevator.getCurrentFloorIndex() != destinationFloor) {
                             clickedBtn.setBackground(Color.GREEN);
                             elevator.CreateRequest(destinationFloor, clickedBtn);
                         } else {
