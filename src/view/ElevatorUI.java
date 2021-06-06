@@ -233,7 +233,7 @@ public class ElevatorUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Floor1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/Elevator.1.png"))); // NOI18N
+        Floor1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Laptop Shop\\Documents\\GitHub\\RTS\\src\\view\\images\\Elevator.1.png")); // NOI18N
 
         javax.swing.GroupLayout CarPnelLayout = new javax.swing.GroupLayout(CarPnel);
         CarPnel.setLayout(CarPnelLayout);
@@ -349,7 +349,7 @@ public class ElevatorUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/bngv4.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Laptop Shop\\Documents\\GitHub\\RTS\\src\\view\\images\\bngv4.png")); // NOI18N
         jLabel4.setText("jLabel4");
 
         javax.swing.GroupLayout ElevPanelLayout = new javax.swing.GroupLayout(ElevPanel);

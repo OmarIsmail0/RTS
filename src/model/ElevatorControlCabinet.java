@@ -88,6 +88,11 @@ public class ElevatorControlCabinet {
         }
     }
 
+    @Override
+    public String toString() {
+        return "ElevatorControlCabinet{" + "peepeepoopoo=" + peepeepoopoo + '}';
+    }
+
     
     
 }

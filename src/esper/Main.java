@@ -19,7 +19,7 @@ public class Main {
         Config.registerEvents();
 
         final ElevatorCar elevator = new ElevatorCar();
-        System.out.println(elevator.getGui().getCarPnel().getLocation().y);
+        //System.out.println(elevator.getGui().getCarPnel().getLocation().y);
         Config.createStatement("select isEmergencyPressed from PressEmergencyStopEvent")
                 .setSubscriber(new Object() {
                     public void update(boolean isEmergencyPressed) throws InterruptedException {

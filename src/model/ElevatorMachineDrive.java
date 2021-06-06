@@ -18,6 +18,8 @@ public class ElevatorMachineDrive extends TimerTask {
     private final ElevatorCar elevator;
     private final ElevatorRequestController request;
 
+    
+
     public ElevatorMachineDrive(ElevatorCar elevator, ElevatorRequestController request) {
         this.elevator = elevator;
         this.request = request;
