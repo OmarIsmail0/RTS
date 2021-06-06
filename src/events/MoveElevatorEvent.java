@@ -1,11 +1,11 @@
 package events;
 
-public class ChooseFloorEvent {
+public class MoveElevatorEvent {
 
     private final int destinationFloor;
     private final String type;
 
-    public ChooseFloorEvent(int destinationFloor, String type) {
+    public MoveElevatorEvent(int destinationFloor, String type) {
         this.destinationFloor = destinationFloor;
         this.type = type;
     }

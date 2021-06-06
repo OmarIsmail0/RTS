@@ -9,9 +9,29 @@ import javax.sound.sampled.Clip;
 
 public class SoundController {
 
-    private Clip openDoorSound;
+    private Clip openDoorSound, errorSound;
     private static Clip waitingMusic;
     private static Clip emergencyStopSound;
+    
+    public static void setWaitingMusic(Clip waitingMusic) {
+        SoundController.waitingMusic = waitingMusic;
+    }
+
+    public static Clip getEmergencyStopSound() {
+        return emergencyStopSound;
+    }
+
+    public void setOpenDoorSound(Clip openDoorSound) {
+        this.openDoorSound = openDoorSound;
+    }
+
+    public Clip getOpenDoorSound() {
+        return openDoorSound;
+    }
+
+    public static Clip getWaitingMusic() {
+        return waitingMusic;
+    }
 
     public void playWaitingMusic() {
         if (waitingMusic != null) {
@@ -39,6 +59,18 @@ public class SoundController {
             System.out.println(e.getMessage());
         }
     }
+    
+    public void playErrorSound() {
+        try {
+            URL loc = getClass().getResource("../sounds/Error.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(loc);
+            errorSound = AudioSystem.getClip();
+            errorSound.open(audioInputStream);
+            errorSound.start();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public void playEmergencySound() {
         if (emergencyStopSound != null) {
@@ -55,24 +87,6 @@ public class SoundController {
         }
     }
 
-    public static void setWaitingMusic(Clip waitingMusic) {
-        SoundController.waitingMusic = waitingMusic;
-    }
-
-    public static Clip getEmergencyStopSound() {
-        return emergencyStopSound;
-    }
-
-    public void setOpenDoorSound(Clip openDoorSound) {
-        this.openDoorSound = openDoorSound;
-    }
-
-    public Clip getOpenDoorSound() {
-        return openDoorSound;
-    }
-
-    public static Clip getWaitingMusic() {
-        return waitingMusic;
-    }
+    
 
 }

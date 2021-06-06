@@ -14,7 +14,7 @@ public class Config {
         engine.getEPAdministrator().getConfiguration().addEventType(PressEmergencyStopEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(DoorSensorReading.class);
         engine.getEPAdministrator().getConfiguration().addEventType(WeightSensorReading.class);
-        engine.getEPAdministrator().getConfiguration().addEventType(ChooseFloorEvent.class);
+        engine.getEPAdministrator().getConfiguration().addEventType(MoveElevatorEvent.class);
         engine.getEPAdministrator().getConfiguration().addEventType(ElevatorStateReading.class);
         
         System.out.println("Events Successfully Registered.");

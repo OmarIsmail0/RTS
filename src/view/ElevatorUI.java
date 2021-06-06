@@ -6,7 +6,7 @@
 package view;
 
 import esper.Config;
-import events.ChooseFloorEvent;
+import events.MoveElevatorEvent;
 import events.DoorSensorReading;
 import events.PressEmergencyStopEvent;
 import events.WeightSensorReading;
@@ -465,7 +465,7 @@ public class ElevatorUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CallElevatorBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn1ActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(1, "CallElevatorBtn"));
+        Config.sendEvent(new MoveElevatorEvent(1, "CallElevatorBtn"));
     }//GEN-LAST:event_CallElevatorBtn1ActionPerformed
 
     private void doorStatusFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doorStatusFieldActionPerformed
@@ -483,7 +483,7 @@ public class ElevatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_StopBtnActionPerformed
 
     private void Floor2btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor2btnActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(2, "Floor"));         // TODO add your handling code here:
+        Config.sendEvent(new MoveElevatorEvent(2, "Floor"));         // TODO add your handling code here:
     }//GEN-LAST:event_Floor2btnActionPerformed
 
     private void CloseDoorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseDoorBtnActionPerformed
@@ -492,19 +492,19 @@ public class ElevatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseDoorBtnActionPerformed
 
     private void CallElevatorBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn2ActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(2, "CallElevatorBtn"));
+        Config.sendEvent(new MoveElevatorEvent(2, "CallElevatorBtn"));
     }//GEN-LAST:event_CallElevatorBtn2ActionPerformed
 
     private void CallElevatorBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CallElevatorBtn3ActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(3, "CallElevatorBtn"));
+        Config.sendEvent(new MoveElevatorEvent(3, "CallElevatorBtn"));
     }//GEN-LAST:event_CallElevatorBtn3ActionPerformed
 
     private void Floor1btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor1btnActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(1, "Floor"));
+        Config.sendEvent(new MoveElevatorEvent(1, "Floor"));
     }//GEN-LAST:event_Floor1btnActionPerformed
 
     private void Floor3btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Floor3btnActionPerformed
-        Config.sendEvent(new ChooseFloorEvent(3, "Floor"));         // TODO add your handling code here:
+        Config.sendEvent(new MoveElevatorEvent(3, "Floor"));         // TODO add your handling code here:
     }//GEN-LAST:event_Floor3btnActionPerformed
 
     private void WeightInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WeightInputActionPerformed

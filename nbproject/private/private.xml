@@ -23,7 +23,6 @@
             <file>file:/D:/Documents/GitHub/RTS/src/events/WeightSensorReading.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorMachineDrive.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/esper/Config.java</file>
-            <file>file:/D:/Documents/GitHub/RTS/src/model/RequestManager.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/DoorController.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/SoundController.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/WeightController.java</file>
@@ -31,11 +30,12 @@
             <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorCar.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/EmergencyStopButton.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/view/ElevatorUI.java</file>
+            <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorRequest.java</file>
+            <file>file:/D:/Documents/GitHub/RTS/src/model/PanelControl.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorControlCabinet.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/esper/Main.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/events/ElevatorStateReading.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/events/DoorSensorReading.java</file>
-            <file>file:/D:/Documents/GitHub/RTS/src/model/Request.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/events/ChooseFloorEvent.java</file>
         </group>
     </open-files>

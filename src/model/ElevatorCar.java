@@ -28,7 +28,7 @@ public class ElevatorCar {
     }
 
     public void CreateRequest(int destFloor, JButton btn) {
-        ElevatorRequest request = new ElevatorRequest(destFloor, btn);
+        ElevatorRequestController request = new ElevatorRequestController(destFloor, btn, this, ctrl);
         this.ctrl.AcceptRequest(request);
     }
 
@@ -111,5 +111,6 @@ public class ElevatorCar {
         return weightCtrl;
     }
 
+    
     
 }

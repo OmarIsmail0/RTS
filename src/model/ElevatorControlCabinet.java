@@ -12,7 +12,7 @@ public class ElevatorControlCabinet {
     private final SoundController sound;
     private final ElevatorCar elevator;
     private final Timer requestManager;
-    private final ArrayList<ElevatorRequest> Requests;
+    private final ArrayList<ElevatorRequestController> Requests;
     private boolean emergencyTrigger;
 
     public ElevatorControlCabinet(ElevatorCar elevator) {
@@ -20,7 +20,7 @@ public class ElevatorControlCabinet {
         requestManager = new Timer();
         gui = new ElevatorUI();
         Requests = new ArrayList<>();
-        requestManager.schedule(new PanelControl(elevator, this), 0, 1000);
+        requestManager.schedule(new ElevatorRequestController(elevator, this), 0, 1000);
         sound = new SoundController();
     }
 
@@ -44,15 +44,9 @@ public class ElevatorControlCabinet {
         this.emergencyTrigger = emergencyTrigger;
     }
 
-//    public void ChangeDoorState(boolean doorState) {
-//        if (elevator.getIsMoving() == false) {
-//            this.elevator.getDoorCtrl().changeDoorStatus(doorState);
-//        }
-//    }
-
-    public void AcceptRequest(ElevatorRequest request) {
+    public void AcceptRequest(ElevatorRequestController request) {
         boolean flagExist = false;
-        for (ElevatorRequest r : Requests) {
+        for (ElevatorRequestController r : Requests) {
             if (r.getRequestedFloor() == request.getRequestedFloor()
                     || r.getRequestID() == request.getRequestID()
                     || request.getRequestedFloor() == elevator.getCurrentFloor()) {
@@ -65,11 +59,11 @@ public class ElevatorControlCabinet {
 
     }
 
-    public ArrayList<ElevatorRequest> getRequests() {
+    public ArrayList<ElevatorRequestController> getRequests() {
         return Requests;
     }
 
-    public ElevatorRequest getNextRequest() {
+    public ElevatorRequestController getNextRequest() {
         Collections.sort(Requests, (a, b) -> Math.abs(elevator.getCurrentFloor() - a.getRequestedFloor()) < Math.abs(elevator.getCurrentFloor() - b.getRequestedFloor()) ? -1 : 1);
         if (Requests.isEmpty()) {
             return null;
@@ -78,7 +72,7 @@ public class ElevatorControlCabinet {
         }
     }
 
-    public void MoveElevator(ElevatorRequest r) {
+    public void MoveElevator(ElevatorRequestController r) {
         if (r.getRequestedFloor() != elevator.getCurrentFloor()) {
             elevator.getGui().getDoorBtn().setEnabled(false);
             elevator.getGui().getCloseDoorBtn().setEnabled(false);

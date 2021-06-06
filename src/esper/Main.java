@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import model.ElevatorCar;
-import model.ElevatorRequest;
+import model.ElevatorRequestController;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -41,7 +41,7 @@ public class Main {
                     }
                 });
 
-        Config.createStatement("select destinationFloor, type from ChooseFloorEvent")
+        Config.createStatement("select destinationFloor, type from MoveElevatorEvent")
                 .setSubscriber(new Object() {
                     public void update(int destinationFloor, String type) throws InterruptedException {
                         JButton clickedBtn = null;
@@ -73,7 +73,7 @@ public class Main {
                             elevator.CreateRequest(destinationFloor, clickedBtn);
                         }
                         else{
-                            
+                            elevator.getCtrl().getSound().playErrorSound();
                         }
                     }
                 });

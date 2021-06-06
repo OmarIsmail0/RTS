@@ -15,7 +15,6 @@ public class ElevatorStateReading {
         return isMoving;
     }
 
-
     public int getCurrentFloor() {
         return currentFloor;
     }
