@@ -3,19 +3,17 @@ package events;
 public class ElevatorStateReading {
     private final boolean isMoving;
     private final int currentFloor;
-    private final int carPositionY;
+    private final int YAxisPoint;
 
-    public ElevatorStateReading( boolean isMoving, int carPositionY, int currentFloor) {
+    public ElevatorStateReading( boolean isMoving, int YAxisPoint, int currentFloor) {
         this.isMoving = isMoving;
-        
         this.currentFloor = currentFloor;
-        this.carPositionY = carPositionY;
+        this.YAxisPoint = YAxisPoint;
     }
 
     public boolean isIsMoving() {
         return isMoving;
     }
-
 
     public int getCurrentFloor() {
         return currentFloor;
@@ -25,8 +23,10 @@ public class ElevatorStateReading {
         return isMoving;
     }
 
-    public int getCarPositionY() {
-        return carPositionY;
+    public int getYAxisPoint() {
+        return YAxisPoint;
     }
+
+    
     
 }

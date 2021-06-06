@@ -1,11 +1,13 @@
 package esper;
 
+import events.DoorSensorReading;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import model.ElevatorCar;
-import model.Request;
+import model.ElevatorRequestController;
+import model.WeightController;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -16,85 +18,89 @@ public class Main {
         Logger.getRootLogger().setLevel(Level.OFF);
         Config.registerEvents();
 
-        //final EmergencyStopController elevator = new EmergencyStopController();
         final ElevatorCar elevator = new ElevatorCar();
-       // System.out.println(elevator.getGui().getCarPnel().getLocation().y);
-        Config.createStatement("select trigger_emergency from PressEmergencyStopEvent")
+        //System.out.println(elevator.getGui().getCarPnel().getLocation().y);
+        Config.createStatement("select isEmergencyPressed from PressEmergencyStopEvent")
                 .setSubscriber(new Object() {
-                    public void update(boolean status) throws InterruptedException {
-
-                        elevator.setEmergencyTrigger(status);
-                        if (status) {
-                            elevator.RunEmergency();
+                    public void update(boolean isEmergencyPressed) throws InterruptedException {
+                        elevator.setEmergencyTrigger(isEmergencyPressed);
+                        if (isEmergencyPressed) {
+                            elevator.StartAlarm();
                         }
                     }
                 });
 
-        Config.createStatement("select doorstate from DoorSensorReading")
+        Config.createStatement("select doorOpen from DoorSensorReading")
                 .setSubscriber(new Object() {
-                    public void update(boolean isOpen) throws InterruptedException {
-                        elevator.getDoorCtrl().changeDoorStatus(isOpen);
-                        // elev.getDoorController().setIsOpen(isopen);
-                        if (isOpen == true) {
-                            elevator.OpenDoor();
+                    public void update(boolean doorOpen) throws InterruptedException {
+                        elevator.getDoorCtrl().changeDoorStatus(doorOpen);
+                        if (doorOpen == true) {
+                            elevator.manageDoor("Open");
+                            elevator.getGui().getDoorBtn().setEnabled(false);
+                            elevator.getGui().getCloseDoorBtn().setEnabled(true);
+                            
                         } else {
-                            elevator.CloseDoor();
+                            elevator.manageDoor("Closed");
+                            elevator.getGui().getCloseDoorBtn().setEnabled(false);
+                            elevator.getGui().getDoorBtn().setEnabled(true);
+                            elevator.getCtrl().getSound().playCloseDoorSound();
                         }
                     }
                 });
 
-        Config.createStatement("select destinationFloor, type from ChooseFloorEvent")
+        Config.createStatement("select destinationFloor, type from MoveElevatorEvent")
                 .setSubscriber(new Object() {
                     public void update(int destinationFloor, String type) throws InterruptedException {
                         JButton clickedBtn = null;
-                        String btnName = "";
+                        String str = "";
                         JPanel panel;
                         if (type.equals("CallElevatorBtn")) {
-                            btnName = type + destinationFloor;
+                            str = type + destinationFloor;
                             panel = elevator.getGui().getCallPanl();
                         } else {
-                            btnName = type + destinationFloor + "btn";
+                            str = type + destinationFloor + "btn";
                             panel = elevator.getGui().getElevatorControllerPanel();
                         }
 
-                        //Searching for the clicked button
                         for (Component c : panel.getComponents()) {
                             try {
                                 if (c instanceof JButton) {
-                                    if (c.getName().compareToIgnoreCase(btnName) == 0) {
-                                        clickedBtn = (JButton) c;
+                                    if (str.equals(c.getName())) {
+                                        clickedBtn = (JButton) c; //Converting Component to JButton
                                         break;
                                     }
                                 }
                             } catch (Exception e) {
+                                System.out.println("Button Not Found!");
                             }
                         }
 
-                        if (elevator.getCurrentFloor() != destinationFloor) {
+                        if (elevator.getCurrentFloorIndex() != destinationFloor) {
                             clickedBtn.setBackground(Color.GREEN);
-                            elevator.AddRequest(new Request(destinationFloor, clickedBtn));
+                            elevator.CreateRequest(destinationFloor, clickedBtn);
+                        } else {
+                            elevator.getCtrl().getSound().playErrorSound();
                         }
                     }
                 });
 
-        Config.createStatement("select isMoving, carPositionY, currentFloor from ElevatorStateReading")
+        Config.createStatement("select isMoving, YAxisPoint, currentFloor from ElevatorStateReading")
                 .setSubscriber(new Object() {
-                    public void update(boolean isMoving, int carPositionY, int currentFloor) throws InterruptedException {
+                    public void update(boolean isMoving, int YAxisPoint, int currentFloor) throws InterruptedException {
                         elevator.setMoving(isMoving);
-                        elevator.setElevatorPositionY(carPositionY);
+                        elevator.setElevatorPositionY(YAxisPoint);
                         elevator.setCurrentFloor(currentFloor);
                         if (!isMoving) {
                             elevator.getGui().getDoorBtn().setEnabled(true);
                         }
-
                     }
                 });
 
         Config.createStatement("select weight from WeightSensorReading")
                 .setSubscriber(new Object() {
                     public void update(int weight) throws InterruptedException {
-                        System.out.println(weight);
-                        if (weight <= 300 && weight > 50) {
+
+                        if (weight <= 300 && weight > 30) {
                             elevator.getGui().getCallElevatorBtn1().setEnabled(true);
                             elevator.getGui().getCallElevatorBtn2().setEnabled(true);
                             elevator.getGui().getCallElevatorBtn3().setEnabled(true);
