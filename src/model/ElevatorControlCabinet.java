@@ -8,6 +8,7 @@ import java.util.Timer;
 
 public class ElevatorControlCabinet {
     private int peepeepoopoo;
+    private int plz;
     private final ElevatorUI gui;
     private final SoundController sound;
     private final ElevatorCar elevator;
