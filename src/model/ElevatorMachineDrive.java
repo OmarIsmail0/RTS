@@ -49,13 +49,13 @@ public class ElevatorMachineDrive extends TimerTask {
 
     @Override
     public void run() {
-        if (elevator.isEmergencyTrigger()){
+        if (elevator.isEmergencyTrigger()) {
             this.cancel();
             return;
         }
         int FloorIdx = request.getRequestedFloor() - 1;
         JPanel Elevator = elevator.getGui().getCarPnel();
-        String str ="";
+        String str = "";
         if (Math.abs(Elevator.getLocation().y - FloorY[FloorIdx]) > 0) {  // checks if the elevator isMoving
             if (Elevator.getLocation().y > FloorY[FloorIdx]) {
                 Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1);
@@ -89,8 +89,10 @@ public class ElevatorMachineDrive extends TimerTask {
             elevator.getGui().getEmergencyStopBtn().setEnabled(false);
             elevator.getGui().getDoorBtn().setEnabled(true);
             elevator.getGui().getCloseDoorBtn().setEnabled(true);
-            str = String.valueOf(FloorIdx+1);
+            str = String.valueOf(FloorIdx + 1);
             elevator.getGui().getFloorNo().setText(str);
+            
+
             for (Component c : elevator.getGui().getCallPanl().getComponents()) {
                 if (c instanceof JButton) {
                     if (c.getName().compareToIgnoreCase(request.getClickedBtn().getName()) == 0) {
@@ -116,8 +118,15 @@ public class ElevatorMachineDrive extends TimerTask {
                     }
                 }
             }
+            //Timer
+            try {
+                Thread.sleep(5000);
+                Config.sendEvent(new DoorSensorReading(false));
+            } catch (Exception e) {
+
+            }
             this.cancel();
         }
     }
-    
+
 }

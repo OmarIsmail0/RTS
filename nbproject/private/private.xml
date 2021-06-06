@@ -28,15 +28,13 @@
             <file>file:/D:/Documents/GitHub/RTS/src/model/WeightController.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/events/PressEmergencyStopEvent.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorCar.java</file>
-            <file>file:/D:/Documents/GitHub/RTS/src/model/EmergencyStopButton.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/view/ElevatorUI.java</file>
-            <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorRequest.java</file>
-            <file>file:/D:/Documents/GitHub/RTS/src/model/PanelControl.java</file>
+            <file>file:/D:/Documents/GitHub/RTS/src/events/MoveElevatorEvent.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorControlCabinet.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/esper/Main.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/events/ElevatorStateReading.java</file>
             <file>file:/D:/Documents/GitHub/RTS/src/events/DoorSensorReading.java</file>
-            <file>file:/D:/Documents/GitHub/RTS/src/events/ChooseFloorEvent.java</file>
+            <file>file:/D:/Documents/GitHub/RTS/src/model/ElevatorRequestController.java</file>
         </group>
     </open-files>
 </project-private>

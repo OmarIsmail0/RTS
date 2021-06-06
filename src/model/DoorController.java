@@ -30,14 +30,6 @@ public class DoorController {
             elevator.getElevator().getGui().getDoorStatus().setText("Open");
             elevator.getGUI().getDoorBtn().setEnabled(false);
             elevator.getGUI().getCloseDoorBtn().setEnabled(true);
-
-            
-//            try {
-//                Thread.sleep(150);
-//                elevator.getSound().setOpenDoorSound(null);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
         }
         else {
             elevator.getGUI().getDoorBtn().setEnabled(true);

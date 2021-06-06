@@ -17,7 +17,7 @@ public class Main {
         Config.registerEvents();
 
         final ElevatorCar elevator = new ElevatorCar();
-        
+
         Config.createStatement("select isEmergencyPressed from PressEmergencyStopEvent")
                 .setSubscriber(new Object() {
                     public void update(boolean isEmergencyPressed) throws InterruptedException {
@@ -34,9 +34,13 @@ public class Main {
                         elevator.getDoorCtrl().changeDoorStatus(doorOpen);
                         if (doorOpen == true) {
                             elevator.manageDoor("Open");
+                            elevator.getGui().getDoorBtn().setEnabled(false);
+                            elevator.getGui().getCloseDoorBtn().setEnabled(true);
                             elevator.getCtrl().getSound().playOpenDoorSound();
                         } else {
                             elevator.manageDoor("Closed");
+                            elevator.getGui().getCloseDoorBtn().setEnabled(false);
+                            elevator.getGui().getDoorBtn().setEnabled(true);
                         }
                     }
                 });
@@ -71,8 +75,7 @@ public class Main {
                         if (elevator.getCurrentFloor() != destinationFloor) {
                             clickedBtn.setBackground(Color.GREEN);
                             elevator.CreateRequest(destinationFloor, clickedBtn);
-                        }
-                        else{
+                        } else {
                             elevator.getCtrl().getSound().playErrorSound();
                         }
                     }
