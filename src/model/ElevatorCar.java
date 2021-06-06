@@ -25,6 +25,7 @@ public class ElevatorCar {
         weightCtrl = new WeightController(this);
         doorCtrl = new DoorController(true, ctrl);
         currentFloor = 1;
+        weightCtrl.start();
     }
 
     public void CreateRequest(int destFloor, JButton btn) {

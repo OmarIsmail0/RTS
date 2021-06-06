@@ -26,7 +26,6 @@ public class DoorController {
         this.isOpen = isOpen;
 
         if (isOpen == true){
-            elevator.getGUI().getLightPanel().setBackground(Color.GREEN);
             elevator.getElevator().getGui().getDoorStatus().setText("Open");
             elevator.getGUI().getDoorBtn().setEnabled(false);
             elevator.getGUI().getCloseDoorBtn().setEnabled(true);
@@ -35,7 +34,6 @@ public class DoorController {
         else {
             elevator.getGUI().getDoorBtn().setEnabled(true);
             elevator.getGUI().getCloseDoorBtn().setEnabled(false);
-            elevator.getGUI().getLightPanel().setBackground(Color.RED);
             elevator.getElevator().getGui().getDoorStatus().setText("Closed");
         }
     }

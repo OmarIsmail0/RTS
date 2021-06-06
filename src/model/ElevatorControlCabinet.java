@@ -84,7 +84,7 @@ public class ElevatorControlCabinet {
 
             Timer t = new Timer();
             //Movement Timer
-            t.schedule(new ElevatorMachineDrive(elevator, r), 3000, 1);
+            t.schedule(new ElevatorMachineDrive(elevator, r), 1000, 20);
         }
     }
 

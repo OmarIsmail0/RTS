@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class ElevatorMachineDrive extends TimerTask {
 
-    int[] FloorY = {450, 340, 240};
+    int[] FloorY = {438, 277, 148};
 
     private final ElevatorCar elevator;
     private final ElevatorRequestController request;
@@ -36,7 +36,7 @@ public class ElevatorMachineDrive extends TimerTask {
     }
 
     public int getFloorIndex(int Y) {
-        if (Y >= FloorY[0] - 1) 
+        if (Y >= FloorY[0] - 1)
             return 1;
         else if (Y < FloorY[0] && Y >= FloorY[1])
             return 2;
@@ -45,6 +45,8 @@ public class ElevatorMachineDrive extends TimerTask {
         else 
             return 0;
     }
+
+
 
     @Override
     public void run() {
@@ -57,29 +59,18 @@ public class ElevatorMachineDrive extends TimerTask {
         String str = "";
         if (Math.abs(Elevator.getLocation().y - FloorY[FloorIdx]) > 0) {  // checks if the elevator isMoving
             if (Elevator.getLocation().y > FloorY[FloorIdx]) {
-                Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1);
-                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getFloorIndex(Elevator.getLocation().y)));
-
-                elevator.manageDoor("Closed");
-                elevator.getGui().getWeightInput().setEnabled(false);
-                elevator.getGui().getEmergencyStopBtn().setEnabled(true);
-                elevator.getGui().getDoorBtn().setEnabled(false);
-                elevator.getGui().getLightPanel().setBackground(Color.GREEN);
-                int idx = getFloorIndex(Elevator.getLocation().y);
-                str = String.valueOf(idx);
-                elevator.getGui().getFloorNo().setText(str);
+                Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y - 1); //down
             } else {
-                Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y + 1);
-                Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getFloorIndex(Elevator.getLocation().y)));
-                elevator.manageDoor("Closed");
-                elevator.getGui().getWeightInput().setEnabled(false);
-                elevator.getGui().getEmergencyStopBtn().setEnabled(true);
-                elevator.getGui().getDoorBtn().setEnabled(false);
-                elevator.getGui().getLightPanel().setBackground(Color.GREEN);
-                int idx = getFloorIndex(Elevator.getLocation().y);
-                str = String.valueOf(idx);
-                elevator.getGui().getFloorNo().setText(str);
+                Elevator.setLocation(Elevator.getLocation().x, Elevator.getLocation().y + 1); //up
             }
+            Config.sendEvent(new ElevatorStateReading(true, Elevator.getLocation().y, getFloorIndex(Elevator.getLocation().y)));
+            elevator.manageDoor("Closed");
+            elevator.getGui().getWeightInput().setEnabled(false);
+            elevator.getGui().getEmergencyStopBtn().setEnabled(true);
+            elevator.getGui().getDoorBtn().setEnabled(false);
+            int idx = getFloorIndex(Elevator.getLocation().y);
+            str = String.valueOf(idx);
+            elevator.getGui().getFloorNo().setText(str);
         } else {
             Config.sendEvent(new ElevatorStateReading(false, Elevator.getLocation().y, getFloorIndex(Elevator.getLocation().y)));
             if (elevator.getDoorCtrl().isIsOpen()) {
@@ -99,7 +90,7 @@ public class ElevatorMachineDrive extends TimerTask {
                     if (c.getName().compareToIgnoreCase(request.getClickedBtn().getName()) == 0) {
                         c.setBackground(Color.PINK);
                         elevator.manageDoor("Open");
-                        elevator.getGui().getLightPanel().setBackground(Color.GREEN);
+                       
                         elevator.getGui().getWeightInput().setEnabled(true);
                         elevator.getGui().getEmergencyStopBtn().setEnabled(false);
                         elevator.getGui().getDoorBtn().setEnabled(true);

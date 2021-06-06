@@ -25,13 +25,16 @@ public class WeightController extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Here");
-        try {
-            this.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(WeightController.class.getName()).log(Level.SEVERE, null, ex);
+        while (true){
+
+            try {
+                this.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(WeightController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            weight = Integer.parseInt(elevator.getGui().getWeightInput().getText());
+            Config.sendEvent(new WeightSensorReading(weight));
         }
-        weight = Integer.parseInt(elevator.getGui().getWeightInput().getText());
-        Config.sendEvent(new WeightSensorReading(weight));
+
     }
 }

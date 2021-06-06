@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import model.ElevatorCar;
 import model.ElevatorRequestController;
+import model.WeightController;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -18,7 +19,7 @@ public class Main {
         Config.registerEvents();
 
         final ElevatorCar elevator = new ElevatorCar();
-
+        System.out.println(elevator.getGui().getCarPnel().getLocation().y);
         Config.createStatement("select isEmergencyPressed from PressEmergencyStopEvent")
                 .setSubscriber(new Object() {
                     public void update(boolean isEmergencyPressed) throws InterruptedException {
@@ -92,14 +93,13 @@ public class Main {
                         if (!isMoving) {
                             elevator.getGui().getDoorBtn().setEnabled(true);
                         }
-
                     }
                 });
 
         Config.createStatement("select weight from WeightSensorReading")
                 .setSubscriber(new Object() {
                     public void update(int weight) throws InterruptedException {
-                        System.out.println(weight);
+
                         if (weight <= 300 && weight > 30) {
                             elevator.getGui().getCallElevatorBtn1().setEnabled(true);
                             elevator.getGui().getCallElevatorBtn2().setEnabled(true);
