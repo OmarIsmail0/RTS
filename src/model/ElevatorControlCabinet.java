@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Timer;
 
 public class ElevatorControlCabinet {
-
+    private int peepeepoopoo;
     private final ElevatorUI gui;
     private final SoundController sound;
     private final ElevatorCar elevator;
